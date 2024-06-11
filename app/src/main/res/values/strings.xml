@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Verky</string>
+    <string name="login_page_welcome_message">Welcome back!</string>
 </resources>

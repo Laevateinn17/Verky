@@ -30,6 +30,9 @@ class LoginActivity : AppCompatActivity() {
             if(email.isEmpty() || pass.isEmpty()){
                 Toast.makeText(this, "All fields must be filled", Toast.LENGTH_LONG).show();
             }
+            else{
+
+            }
         }
     }
 

@@ -79,6 +79,9 @@
         android:textAllCaps="false"
         app:layout_constraintTop_toBottomOf="@id/inputLayout"
         android:layout_marginTop="32dp"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/urbanist_bold"
         />
     <LinearLayout
         android:layout_width="wrap_content"
@@ -87,17 +90,23 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:orientation="horizontal"
+        android:layout_marginVertical="12dp"
         >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Don't have an account?"
+            android:fontFamily="@font/urbanist_bold"
+            android:textSize="16sp"
             app:layout_constraintTop_toBottomOf="@id/loginButton"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Register"
+            android:text="Register now"
+            android:fontFamily="@font/urbanist_bold"
+            android:textColor="@color/primary"
+            android:textSize="16sp"
             app:layout_constraintTop_toBottomOf="@id/loginButton"
             android:layout_marginLeft="4dp"
             />

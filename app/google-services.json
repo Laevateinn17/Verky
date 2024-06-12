@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "989301377785",
+    "project_id": "verky-123",
+    "storage_bucket": "verky-123.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:989301377785:android:4be9aa8795b5a6549ff028",
+        "android_client_info": {
+          "package_name": "edu.bluejack23_2.verky"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdyHVA74hnbLv0mki3-4YtuXGFQDqQ8Tw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

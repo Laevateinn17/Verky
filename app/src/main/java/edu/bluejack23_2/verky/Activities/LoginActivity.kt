@@ -31,7 +31,7 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "All fields must be filled", Toast.LENGTH_LONG).show();
             }
             else{
-
+                Toast.makeText(this, "Valid", Toast.LENGTH_LONG).show();
             }
         }
     }

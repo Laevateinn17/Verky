@@ -3,60 +3,23 @@ package edu.bluejack23_2.verky.Activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
-import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import edu.bluejack23_2.verky.Listener.AuthListener
 import edu.bluejack23_2.verky.R
+import edu.bluejack23_2.verky.Repository.UserRepository
+import edu.bluejack23_2.verky.ViewModel.LoginViewModel
 import edu.bluejack23_2.verky.databinding.ActivityLoginBinding
+import edu.bluejack23_2.verky.Util.toast
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), AuthListener{
 
     private lateinit var binding : ActivityLoginBinding
-    private lateinit var emailET : EditText
-    private lateinit var passET : EditText
-    private lateinit var loginBtn : Button
     private lateinit var registerLink : TextView
-    private lateinit var auth : FirebaseAuth
-
-    fun init(){
-        emailET = binding.emailEditText
-        passET = binding.passwordEditText
-        loginBtn = binding.loginButton
-        registerLink = binding.RegisterLink
-        auth = Firebase.auth
-    }
+    private lateinit var viewModel: LoginViewModel
 
     fun event(){
-        loginBtn.setOnClickListener{
-            val email = emailET.text.toString()
-            val pass = passET.text.toString()
-
-            if(email.isEmpty() || pass.isEmpty()){
-                Toast.makeText(this, "All fields must be filled", Toast.LENGTH_LONG).show()
-            } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                Toast.makeText(this, "Invalid email format", Toast.LENGTH_LONG).show()
-            } else {
-                auth.signInWithEmailAndPassword(email, pass)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            val intent = Intent(this, DashboardActivity::class.java)
-                            startActivity(intent)
-                            finish()
-                        } else {
-                            Toast.makeText(
-                                baseContext,
-                                "Authentication failed",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
-            }
-        }
-
         registerLink.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
@@ -64,16 +27,28 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        init()
-//        auth.signOut()
-        val currentUser = auth.currentUser
-        if (currentUser != null) {
+
+        if (UserRepository.checkLoggedIn()) {
             startActivity(Intent(this, DashboardActivity::class.java))
             finish()
+            return
         }
 
-        event()
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        binding.loginViewModel = viewModel
+        viewModel.authListener = this
+    }
+
+    override fun OnStarted() {
+        TODO("Not yet implemented")
+    }
+
+    override fun OnSuccess() {
+        startActivity(Intent(this, DashboardActivity::class.java))
+    }
+
+    override fun OnFailure(message: String) {
+        toast(message)
     }
 }

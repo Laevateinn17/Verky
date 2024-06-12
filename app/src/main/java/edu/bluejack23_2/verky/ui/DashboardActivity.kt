@@ -1,11 +1,7 @@
-package edu.bluejack23_2.verky.Activities
+package edu.bluejack23_2.verky.ui
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import edu.bluejack23_2.verky.R
 import edu.bluejack23_2.verky.databinding.ActivityDashboardBinding
 
 class DashboardActivity : AppCompatActivity() {
@@ -15,5 +11,6 @@ class DashboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
     }
 }

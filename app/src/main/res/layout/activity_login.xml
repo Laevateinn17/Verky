@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login_page_welcome_message"
-            android:textSize="36dp"
+            android:textSize="36sp"
             android:textColor="@color/black"
             android:fontFamily="@font/urbanist_bold"
             app:layout_constraintTop_toBottomOf="@id/logo"
@@ -52,7 +52,7 @@
                 android:paddingHorizontal="16dp"
                 android:inputType="textEmailAddress"
                 android:hint="Email"
-                android:elevation="10dp"
+                android:elevation="5dp"
                 android:layout_marginHorizontal="32dp"
                 android:layout_marginVertical="16dp"
                 />
@@ -65,7 +65,7 @@
                 android:paddingHorizontal="16dp"
                 android:inputType="textPassword"
                 android:hint="Password"
-                android:elevation="10dp"
+                android:elevation="5dp"
                 android:layout_marginHorizontal="32dp"
                 android:layout_marginVertical="16dp"
 
@@ -92,7 +92,26 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:orientation="horizontal"
-            android:layout_marginVertical="12dp"/>
+            android:layout_marginVertical="12dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Don't have an account?"
+                android:fontFamily="@font/urbanist_medium"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:id="@+id/registerLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/urbanist_bold"
+                android:textColor="@color/primary"
+                android:text="Register here"
+                android:textSize="16sp"
+                android:layout_marginStart="4sp"
+                />
+        </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

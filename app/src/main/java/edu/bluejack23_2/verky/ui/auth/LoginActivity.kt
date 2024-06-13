@@ -34,7 +34,7 @@ class LoginActivity : AppCompatActivity(){
             }
         }
 
-        binding.RegisterLink.setOnClickListener {
+        binding.registerLink.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
 

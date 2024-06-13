@@ -4,15 +4,18 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
-import dagger.hilt.android.scopes.ActivityScoped
+import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.scopes.ViewModelScoped
 import edu.bluejack23_2.verky.data.auth.AuthRepository
+import edu.bluejack23_2.verky.data.auth.AuthRepositoryImpl
 
 @Module
-@InstallIn(ActivityComponent::class)
-abstract class AuthModule {
+@InstallIn(ViewModelComponent::class)
+object RepositoryModule {
 
-    @Binds
-    abstract fun provideAuthRepository(impl : AuthRepository): AuthRepository
-
+    @Provides
+    @ViewModelScoped
+    fun providesRepo(authRepositoryImpl: AuthRepositoryImpl): AuthRepository {
+        return authRepositoryImpl
+    }
 }

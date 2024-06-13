@@ -8,12 +8,12 @@ import dagger.hilt.components.SingletonComponent
 import edu.bluejack23_2.verky.data.auth.AuthRepository
 import javax.inject.Singleton
 
-@InstallIn(SingletonComponent::class)
 @Module
+@InstallIn(SingletonComponent::class)
 object AppModule {
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance();
 
 //    @Provides

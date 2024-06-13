@@ -2,8 +2,9 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    id( "com.google.dagger.hilt.android")
+    id("com.google.dagger.hilt.android")
     id 'kotlin-parcelize'
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -48,6 +49,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:33.1.0')
     implementation 'com.google.firebase:firebase-database'
     implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-core:9.6.1'
 
     // AndroidX and Material Design dependencies
     implementation 'androidx.core:core-ktx:1.10.1'
@@ -93,3 +95,5 @@ dependencies {
 kapt {
     correctErrorTypes true
 }
+
+apply plugin: 'com.google.gms.google-services'

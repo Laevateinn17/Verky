@@ -1,4 +1,4 @@
-package edu.bluejack23_2.verky.ui
+package edu.bluejack23_2.verky.ui.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -26,10 +26,12 @@ class AuthViewModel @Inject constructor(
         get() = repository.currentUser
 
     init{
-        if(repository.currentUser != null){
-            _loginFlow.value = Resource.Success(repository.currentUser!!)
-        }
+//        if(repository.currentUser != null){
+//            _loginFlow.value = Resource.Success(repository.currentUser!!)
+//        }
+        _loginFlow.value = null
     }
+
 
     fun login(email: String, password : String) = viewModelScope.launch {
         _loginFlow.value = Resource.Loading

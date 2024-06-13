@@ -1,16 +1,16 @@
 package edu.bluejack23_2.verky.ui.auth
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.compose.setContent
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack23_2.verky.data.Resource
 import edu.bluejack23_2.verky.databinding.ActivityLoginBinding
+import edu.bluejack23_2.verky.ui.DashboardActivity
 import edu.bluejack23_2.verky.util.toast
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity(){
@@ -25,8 +25,8 @@ class LoginActivity : AppCompatActivity(){
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if(validate()){
-            binding.loginButton.setOnClickListener {
+        binding.loginButton.setOnClickListener{
+            if(validate()){
                 viewModel.login(
                     binding.emailEditText.text.toString(),
                     binding.passwordEditText.text.toString()
@@ -34,30 +34,40 @@ class LoginActivity : AppCompatActivity(){
             }
         }
 
-        setContent{
-            LoginObserver(viewModel)
+        binding.RegisterLink.setOnClickListener {
+            startActivity(Intent(this, RegisterActivity::class.java))
         }
+
+        observeViewModel();
     }
 
-    @Composable
-    fun LoginObserver(viewModel: AuthViewModel) {
-        val loginState = viewModel.loginFlow.collectAsState()
+    private fun observeViewModel() {
+        lifecycleScope.launch {
+            viewModel.loginFlow.collect { state ->
+                when (state) {
+                    is Resource.Failure -> {
+                        state.exception.message?.let { toast(it) }
+                    }
 
-        loginState?.value?.let{
-            when(it){
-                is Resource.Failure -> {
-                    val context = LocalContext.current
-                    it.exception.message?.let { it1 -> toast(it1) }
-                }
-                Resource.Loading -> {
-                    //Loading State
-                }
-                is Resource.Success<*> -> {
-                    //navController -> perlu di research
-                    //navigate to Home
+                    Resource.Loading -> {
+                        // Show loading state
+                    }
+
+                    is Resource.Success<*> -> {
+                        navigateToHome()
+                    }
+
+                    else -> {
+
+                    }
                 }
             }
         }
+    }
+
+    private fun navigateToHome() {
+        startActivity(Intent(this, DashboardActivity::class.java))
+        finish()
     }
 
     fun validate() : Boolean{

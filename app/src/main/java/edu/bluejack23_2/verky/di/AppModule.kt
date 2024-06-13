@@ -6,14 +6,16 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import edu.bluejack23_2.verky.data.auth.AuthRepository
+import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-class AppModule {
+object AppModule {
 
+    @Singleton
     @Provides
     fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance();
 
-    @Provides
-    fun provideAuthRepository(impl : AuthRepository): AuthRepository = impl
+//    @Provides
+//    fun provideAuthRepository(impl : AuthRepository): AuthRepository = impl
 }

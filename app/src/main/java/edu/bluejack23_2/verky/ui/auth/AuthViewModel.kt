@@ -1,4 +1,4 @@
-package edu.bluejack23_2.verky.ui
+package edu.bluejack23_2.verky.ui.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

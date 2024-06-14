@@ -8,7 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack23_2.verky.data.Resource
 import edu.bluejack23_2.verky.databinding.ActivityLoginBinding
-import edu.bluejack23_2.verky.ui.DashboardActivity
+import edu.bluejack23_2.verky.ui.dashboard.DashboardActivity
 import edu.bluejack23_2.verky.util.toast
 import kotlinx.coroutines.launch
 
@@ -34,9 +34,9 @@ class LoginActivity : AppCompatActivity(){
             }
         }
 
-        binding.RegisterLink.setOnClickListener {
-            startActivity(Intent(this, RegisterActivity::class.java))
-        }
+//        binding.RegisterLink.setOnClickListener {
+//            startActivity(Intent(this, RegisterActivity::class.java))
+//        }
 
         observeViewModel();
     }

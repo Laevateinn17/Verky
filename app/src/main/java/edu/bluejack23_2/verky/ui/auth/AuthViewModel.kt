@@ -28,10 +28,20 @@ class AuthViewModel @Inject constructor(
     init{
 //        if(repository.currentUser != null){
 //            _loginFlow.value = Resource.Success(repository.currentUser!!)
+//            fetchUserData(repository.currentUser!!.uid)
 //        }
         _loginFlow.value = null
     }
 
+    private fun fetchUserData(userId: String) {
+        viewModelScope.launch {
+            try {
+                repository.setUserData(userId)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
 
     fun login(email: String, password : String) = viewModelScope.launch {
         _loginFlow.value = Resource.Loading

@@ -1,4 +1,4 @@
-package edu.bluejack23_2.verky.ui.dashboard
+package edu.bluejack23_2.verky.ui.view.dashboard
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
@@ -7,14 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import edu.bluejack23_2.verky.R
+import edu.bluejack23_2.verky.ui.viewmodel.ProfileViewModel
 
-class HomeFragment : Fragment() {
+class ProfileFragment : Fragment() {
 
     companion object {
-        fun newInstance() = HomeFragment()
+        fun newInstance() = ProfileFragment()
     }
 
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: ProfileViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +27,6 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 }

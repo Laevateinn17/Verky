@@ -1,4 +1,4 @@
-package edu.bluejack23_2.verky.ui.dashboard
+package edu.bluejack23_2.verky.ui.view.dashboard
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

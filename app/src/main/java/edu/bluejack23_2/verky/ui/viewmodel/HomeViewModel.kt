@@ -1,4 +1,4 @@
-package edu.bluejack23_2.verky.ui.dashboard
+package edu.bluejack23_2.verky.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 

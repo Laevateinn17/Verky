@@ -1,11 +1,15 @@
-package edu.bluejack23_2.verky.ui.auth
+package edu.bluejack23_2.verky.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.bluejack23_2.verky.data.Resource
 import edu.bluejack23_2.verky.data.auth.AuthRepository
+import edu.bluejack23_2.verky.data.model.LoggedUser
+import edu.bluejack23_2.verky.data.user.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -13,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val repository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
     private val _loginFlow = MutableStateFlow<Resource<FirebaseUser>?>(null)
@@ -22,21 +27,21 @@ class AuthViewModel @Inject constructor(
 //    private val _signUpFlow = MutableStateFlow<Resource<FirebaseUser>?>(null)
 //    val signUpFlow: StateFlow<Resource<FirebaseUser>?> = _signUpFlow
 
-    val currentUser: FirebaseUser?
-        get() = repository.currentUser
+    private val currentUser: FirebaseUser?
+        get() = authRepository.currentUser
 
     init{
-//        if(repository.currentUser != null){
-//            _loginFlow.value = Resource.Success(repository.currentUser!!)
-//            fetchUserData(repository.currentUser!!.uid)
-//        }
-        _loginFlow.value = null
+        if(currentUser != null){
+            _loginFlow.value = Resource.Success(authRepository.currentUser!!)
+            fetchUserLogged(authRepository.currentUser!!.uid)
+        }
+//        _loginFlow.value = null
     }
 
-    private fun fetchUserData(userId: String) {
+    private fun fetchUserLogged(userId: String) {
         viewModelScope.launch {
             try {
-                repository.setUserData(userId)
+                userRepository.setLoggedUser(userId)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -45,7 +50,7 @@ class AuthViewModel @Inject constructor(
 
     fun login(email: String, password : String) = viewModelScope.launch {
         _loginFlow.value = Resource.Loading
-        val result = repository.login(email, password)
+        val result = authRepository.login(email, password)
         _loginFlow.value = result
     }
 
@@ -56,7 +61,7 @@ class AuthViewModel @Inject constructor(
 //    }
 
     fun logOut(){
-        repository.logOut();
+        authRepository.logOut();
         _loginFlow.value = null
 //        _signUpFlow.value = null
     }

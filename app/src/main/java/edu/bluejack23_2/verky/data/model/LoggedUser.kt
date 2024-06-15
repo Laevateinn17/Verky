@@ -1,6 +1,6 @@
 package edu.bluejack23_2.verky.data.model
 
-class LoginUser private constructor() {
+class LoggedUser private constructor() {
     private var user : User? =  null
 
     fun setUser(user : User){
@@ -13,11 +13,11 @@ class LoginUser private constructor() {
 
     companion object {
         @Volatile
-        private var instance: LoginUser? = null
+        private var instance: LoggedUser? = null
 
-        fun getInstance(): LoginUser =
+        fun getInstance(): LoggedUser =
             instance ?: synchronized(this) {
-                instance ?: LoginUser().also { instance = it }
+                instance ?: LoggedUser().also { instance = it }
             }
     }
 }

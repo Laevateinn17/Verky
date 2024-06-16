@@ -1,4 +1,4 @@
-package edu.bluejack23_2.verky.ui.auth
+package edu.bluejack23_2.verky.ui.view.auth
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +8,10 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack23_2.verky.data.Resource
 import edu.bluejack23_2.verky.databinding.ActivityLoginBinding
-import edu.bluejack23_2.verky.ui.DashboardActivity
+import edu.bluejack23_2.verky.ui.view.auth.RegisterActivity
+import edu.bluejack23_2.verky.ui.view.dashboard.DashboardActivity
+import edu.bluejack23_2.verky.ui.viewmodel.AuthViewModel
+
 import edu.bluejack23_2.verky.util.toast
 import kotlinx.coroutines.launch
 

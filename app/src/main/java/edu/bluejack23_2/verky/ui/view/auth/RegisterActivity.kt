@@ -1,4 +1,4 @@
-package edu.bluejack23_2.verky.ui.auth
+package edu.bluejack23_2.verky.ui.view.auth
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

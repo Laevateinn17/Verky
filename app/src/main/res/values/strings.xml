@@ -13,10 +13,14 @@
     <string name="day_input_label">Day</string>
     <string name="month_input_label">Month</string>
     <string name="year_input_label">Year</string>
-    <string name="gender_input_label">Which gender describes you ?</string>
+    <string name="gender_input_label">Which gender describes you?</string>
     <string name="gender_input_male">Male</string>
     <string name="gender_input_female">Female</string>
     <string name="email_input_label">Your Email</string>
     <string name="password_input_label">Your Password</string>
+    <string name="back_button">Back</string>
+    <string name="continue_button">Continue</string>
+    <string name="register_button">Register</string>
+    <string name="religion_label">What\'s your religion?</string>
 
 </resources>

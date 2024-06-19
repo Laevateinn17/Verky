@@ -15,6 +15,7 @@ import edu.bluejack23_2.verky.ui.viewmodel.ProfileViewModel
 
 class ProfileFragment : Fragment() {
 
+
     companion object {
         fun newInstance() = ProfileFragment()
     }

@@ -1,4 +1,4 @@
-package edu.bluejack23_2.verky.ui.view.dashboard
+package edu.bluejack23_2.verky.ui.view.dashboard.profilefragment
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -38,11 +39,12 @@ class ProfileFragment : Fragment() {
 
     private fun setupObservers(view: View) {
         viewModel.profileData.observe(viewLifecycleOwner) { profile ->
-            Log.e("test", profile.name)
+            view.findViewById<EditText>(R.id.nameEditText).setText(profile.name)
             view.findViewById<TextView>(R.id.ProfileName).text = profile.name
             val profileImageView = view.findViewById<ImageView>(R.id.ProfilePicture)
             Glide.with(this)
                 .load(profile.profilePicture)
+                .placeholder(R.drawable.custom_button) //nanti ganti abu"
                 .into(profileImageView)
         }
     }

@@ -1,6 +1,7 @@
 package edu.bluejack23_2.verky.ui.view.auth
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import edu.bluejack23_2.verky.R
 import edu.bluejack23_2.verky.databinding.ActivityRegisterBinding

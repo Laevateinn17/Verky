@@ -19,23 +19,30 @@ import edu.bluejack23_2.verky.ui.viewmodel.ProfileViewModel
 class ProfileFragment : Fragment() {
 
     private lateinit var binding : FragmentProfileBinding
+    private lateinit var myphoto : MyPhotoFragment
+    private lateinit var aboutMeFragment: AboutMeFragment
+
     companion object {
         fun newInstance() = ProfileFragment()
     }
 
     private val viewModel: ProfileViewModel by viewModels()
 
+    fun init(){
+        myphoto = MyPhotoFragment()
+        aboutMeFragment = AboutMeFragment()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.loadProfile();
-
+        init();
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val view = inflater.inflate(R.layout.fragment_profile, container, false)
         binding = FragmentProfileBinding.inflate(layoutInflater)
         setupObservers(binding.root);
         setupRadioGroup()
@@ -49,36 +56,32 @@ class ProfileFragment : Fragment() {
 
     private fun setupObservers(view: View) {
         viewModel.profileData.observe(viewLifecycleOwner) { profile ->
-            Log.e("test", profile.name)
             view.findViewById<TextView>(R.id.ProfileName).text = profile.name
+
             val profileImageView = view.findViewById<ImageView>(R.id.ProfilePicture)
             Glide.with(this)
                 .load(profile.profilePicture)
-                .placeholder(R.drawable.custom_button) //nanti ganti abu"
+                .placeholder(R.color.gray)
                 .into(profileImageView)
+
+            aboutMeFragment.setContent(profile)
         }
     }
 
     private fun setupRadioGroup() {
         val radioGroup = binding.contentRadioGroup
-        Log.e("radioButton", radioGroup.childCount.toString())
-        for (i in 0 until radioGroup.childCount) {
-            val radioButton = radioGroup.getChildAt(i) as RadioButton
-            Log.e("radioButton", radioButton.toString())
 
-        }
         binding.contentRadioGroup.setOnCheckedChangeListener{ _, checkedId ->
-            Log.e("radio button", checkedId.toString())
             when (checkedId) {
                 binding.myPhotosButton.id -> {
                     childFragmentManager.beginTransaction().replace(binding.contentLayout.id,
-                        MyPhotoFragment()
+                        myphoto
                     ).commit()
 
                 }
                 binding.aboutMeButton.id -> {
                     childFragmentManager.beginTransaction().replace(binding.contentLayout.id,
-                        AboutMeFragment()
+                        aboutMeFragment
                     ).commit()
                 }
             }

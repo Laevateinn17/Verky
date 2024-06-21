@@ -35,6 +35,8 @@ class AuthViewModel @Inject constructor(
             _loginFlow.value = Resource.Success(authRepository.currentUser!!)
             fetchUserLogged(authRepository.currentUser!!.uid)
         }
+        Log.e("user", authRepository.currentUser!!.uid)
+//        Log.e("user_name", LoggedUser.getInstance().getUser()!!.name)
 //        _loginFlow.value = null
     }
 

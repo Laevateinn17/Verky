@@ -4,26 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import edu.bluejack23_2.verky.R
+import edu.bluejack23_2.verky.data.model.LoggedUser
+import edu.bluejack23_2.verky.data.model.User
+import edu.bluejack23_2.verky.ui.viewmodel.ProfileViewModel
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AboutMeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AboutMeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,5 +23,13 @@ class AboutMeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_about_me, container, false)
     }
 
+    fun setContent(user : User){
+        if (user != null) {
+            view?.findViewById<EditText>(R.id.nameInput)?.setText(user.name)
+            view?.findViewById<EditText>(R.id.dayDOB)?.setText(user.dob.day)
+            view?.findViewById<EditText>(R.id.dayMonth)?.setText(user.dob.month)
+            view?.findViewById<EditText>(R.id.dayYear)?.setText(user.dob.year)
+        }
+    }
 
 }

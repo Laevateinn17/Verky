@@ -10,5 +10,6 @@ data class User(
     val religion: String,
     val activities: List<String>,
     val incognitoMode: Boolean,
-    val profilePicture: String
+    val profilePicture: String,
+    val galleryPicture : List<String>
 )

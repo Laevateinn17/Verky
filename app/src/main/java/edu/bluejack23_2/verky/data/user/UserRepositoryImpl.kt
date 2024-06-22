@@ -40,7 +40,9 @@ class UserRepositoryImpl @Inject constructor(
                     null
                 }
 
-                val user = User(name, email, dob!!, gender, religion, activities, incognitoMode, profilePicture)
+                val galleryPicture = snapshot.child("gallery_picture").children.mapNotNull { it.getValue(String::class.java) }
+
+                val user = User(name, email, dob!!, gender, religion, activities, incognitoMode, profilePicture, galleryPicture)
                 LoggedUser.getInstance().setUser(user)
                 Resource.Success(user)
             }

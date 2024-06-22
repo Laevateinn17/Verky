@@ -19,7 +19,7 @@ import edu.bluejack23_2.verky.ui.viewmodel.ProfileViewModel
 class ProfileFragment : Fragment() {
 
     private lateinit var binding : FragmentProfileBinding
-    private lateinit var myphoto : MyPhotoFragment
+    private lateinit var myphotoFragment : MyPhotoFragment
     private lateinit var aboutMeFragment: AboutMeFragment
 
     companion object {
@@ -28,8 +28,8 @@ class ProfileFragment : Fragment() {
 
     private val viewModel: ProfileViewModel by viewModels()
 
-    fun init(){
-        myphoto = MyPhotoFragment()
+    private fun init(){
+        myphotoFragment = MyPhotoFragment()
         aboutMeFragment = AboutMeFragment()
     }
 
@@ -64,18 +64,27 @@ class ProfileFragment : Fragment() {
                 .placeholder(R.color.gray)
                 .into(profileImageView)
 
-            aboutMeFragment.setContent(profile)
+
+            if (aboutMeFragment.isAdded && aboutMeFragment.view != null) {
+                aboutMeFragment.setContent(profile)
+            } else {
+                childFragmentManager
+                    .beginTransaction()
+                    .replace(binding.contentLayout.id, aboutMeFragment)
+                    .runOnCommit { aboutMeFragment.setContent(profile) }
+                    .commit()
+            }
+            childFragmentManager.beginTransaction().replace(binding.contentLayout.id, myphotoFragment).commit()
         }
     }
 
     private fun setupRadioGroup() {
-        val radioGroup = binding.contentRadioGroup
-
+        binding.contentRadioGroup.check((binding.myPhotosButton.id))
         binding.contentRadioGroup.setOnCheckedChangeListener{ _, checkedId ->
             when (checkedId) {
                 binding.myPhotosButton.id -> {
                     childFragmentManager.beginTransaction().replace(binding.contentLayout.id,
-                        myphoto
+                        myphotoFragment
                     ).commit()
 
                 }
@@ -86,6 +95,6 @@ class ProfileFragment : Fragment() {
                 }
             }
         }
-        binding.contentRadioGroup.check((binding.myPhotosButton.id))
+
     }
 }

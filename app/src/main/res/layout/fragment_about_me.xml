@@ -54,6 +54,7 @@
                         android:layout_marginHorizontal="30dp"
                         />
                     <EditText
+                        android:id="@+id/nameET"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:ems="20"
@@ -195,11 +196,13 @@
                         android:layout_marginHorizontal="30dp"
                         />
                     <RadioGroup
+                        android:id="@+id/genderRG"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         >
                         <RadioButton
+                            android:id="@+id/MaleRB"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:text="@string/gender_input_male"
@@ -212,6 +215,7 @@
                             android:buttonTint="@color/primary"
                             />
                         <RadioButton
+                            android:id="@+id/FemaleRB"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:text="@string/gender_input_female"
@@ -241,6 +245,7 @@
                         android:layout_marginHorizontal="30dp"
                         />
                     <EditText
+                        android:id="@+id/emailEditText"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:ems="20"

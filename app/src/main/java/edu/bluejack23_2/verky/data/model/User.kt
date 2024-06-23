@@ -3,6 +3,7 @@ package edu.bluejack23_2.verky.data.model
 import java.util.Date
 
 data class User(
+    val id:String?,
     val name: String,
     val email: String,
     val dob: Date,

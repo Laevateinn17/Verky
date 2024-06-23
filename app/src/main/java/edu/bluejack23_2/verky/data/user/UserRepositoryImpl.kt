@@ -19,10 +19,8 @@ class UserRepositoryImpl @Inject constructor(
 ) : UserRepository {
     override suspend fun setLoggedUser(userId: String) {
         val userData = firebaseDatabase.getReference("users").child(userId);
-//        Log.e("hereeee", "hereeeeeee")
         userData.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-//                Log.e("fetch data here", "eeeeeee")
                 val name = snapshot.child("name").getValue(String::class.java) ?: ""
                 val email = snapshot.child("email").getValue(String::class.java) ?: ""
                 val dobString = snapshot.child("dob").getValue(String::class.java) ?: ""
@@ -42,7 +40,7 @@ class UserRepositoryImpl @Inject constructor(
 
                 val galleryPicture = snapshot.child("gallery_picture").children.mapNotNull { it.getValue(String::class.java) }
 
-                val user = User(name, email, dob!!, gender, religion, activities, incognitoMode, profilePicture, galleryPicture)
+                val user = User(userId, name, email, dob!!, gender, religion, activities, incognitoMode, profilePicture, galleryPicture)
                 LoggedUser.getInstance().setUser(user)
                 Resource.Success(user)
             }

@@ -30,5 +30,6 @@
     <string name="birth_date_input_label">Birth Date</string>
     <string name="gender_input_label2">Gender</string>
     <string name="my_interest_label">My Interest</string>
+    <string name="biometric_login">biometric</string>
 
 </resources>

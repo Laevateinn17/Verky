@@ -27,6 +27,7 @@ class AuthRepositoryImpl @Inject constructor(
         return try{
             val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
             userRepository.setLoggedUser(result.user!!.uid)
+            Log.e("useruser", result.user!!.uid)
             Resource.Success(result.user!!)
         }catch (e: Exception){
             e.printStackTrace();
@@ -49,6 +50,11 @@ class AuthRepositoryImpl @Inject constructor(
 
     override fun logOut() {
         firebaseAuth.signOut();
+    }
+
+    override suspend fun getCurrentUserToken(): String? {
+        currentUser?.getIdToken(true)?.await()?.token?.let { Log.e("current_user", it) }
+        return currentUser?.getIdToken(true)?.await()?.token
     }
 
 }

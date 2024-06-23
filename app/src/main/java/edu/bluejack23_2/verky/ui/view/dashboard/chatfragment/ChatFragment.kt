@@ -1,4 +1,4 @@
-package edu.bluejack23_2.verky.ui.view.dashboard
+package edu.bluejack23_2.verky.ui.view.dashboard.chatfragment
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle

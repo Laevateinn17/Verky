@@ -7,7 +7,7 @@ import edu.bluejack23_2.verky.R
 import edu.bluejack23_2.verky.databinding.ActivityRegisterBinding
 import edu.bluejack23_2.verky.databinding.FragmentStep1RegisterBinding
 
-class RegisterActivity : AppCompatActivity() {
+class RegisterActivity : AppCompatActivity(), Step1RegisterFragment.OnContinueListener {
 
     private lateinit var binding : ActivityRegisterBinding;
 
@@ -35,6 +35,10 @@ class RegisterActivity : AppCompatActivity() {
 //            supportFragmentManager.beginTransaction().replace(R.id.registerFragmentContainer, step2Fragment).addToBackStack(null).commit()
 //        }
 
+    }
+
+    override fun goToFragmentRegist2() {
+        supportFragmentManager.beginTransaction().replace(R.id.registerFragmentContainer, step2Fragment).addToBackStack(null).commit()
     }
 
 

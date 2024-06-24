@@ -16,6 +16,7 @@
         <!-- Navigation bar color. -->
         <item name="android:navigationBarColor">@color/white</item>
         <!-- Customize your theme here. -->
+        <item name="android:windowIsTranslucent">true</item>
     </style>
     <style name="CircleImageView" parent="">
         <item name="cornerFamily">rounded</item>

@@ -29,7 +29,11 @@
     <string name="full_name_input_label">Full Name</string>
     <string name="birth_date_input_label">Birth Date</string>
     <string name="gender_input_label2">Gender</string>
-    <string name="my_interest_label">My Interest</string>
+
     <string name="biometric_login">biometric</string>
+
+    <string name="my_interest_label">My Interests</string>
+    <string name="register_my_interest_label">Share some things you think are cool</string>
+
 
 </resources>

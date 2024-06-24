@@ -4,11 +4,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack23_2.verky.R
 import edu.bluejack23_2.verky.databinding.ActivityDashboardBinding
 import edu.bluejack23_2.verky.ui.view.dashboard.chatfragment.ChatFragment
 import edu.bluejack23_2.verky.ui.view.dashboard.profilefragment.ProfileFragment
 
+@AndroidEntryPoint
 class DashboardActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityDashboardBinding;

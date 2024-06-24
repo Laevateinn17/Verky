@@ -8,6 +8,8 @@ import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 import edu.bluejack23_2.verky.data.auth.AuthRepository
 import edu.bluejack23_2.verky.data.auth.AuthRepositoryImpl
+import edu.bluejack23_2.verky.data.chat.ChatRepository
+import edu.bluejack23_2.verky.data.chat.ChatRepositoryImpl
 import edu.bluejack23_2.verky.data.user.UserRepository
 import edu.bluejack23_2.verky.data.user.UserRepositoryImpl
 
@@ -25,5 +27,11 @@ object RepositoryModule {
     @ViewModelScoped
     fun providesUserRepo(userRepositoryImpl: UserRepositoryImpl) : UserRepository{
         return userRepositoryImpl
+    }
+
+    @Provides
+    @ViewModelScoped
+    fun providesChatRepo(chatRepositoryImpl: ChatRepositoryImpl) : ChatRepository{
+        return chatRepositoryImpl
     }
 }

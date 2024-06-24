@@ -6,27 +6,56 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack23_2.verky.R
+import edu.bluejack23_2.verky.data.model.Chat
+import edu.bluejack23_2.verky.data.model.LoggedUser
+import edu.bluejack23_2.verky.databinding.FragmentAboutMeBinding
+import edu.bluejack23_2.verky.databinding.FragmentChatBinding
+import edu.bluejack23_2.verky.ui.adapter.ChatAdapter
+import edu.bluejack23_2.verky.ui.adapter.MyPhotoAdapter
 import edu.bluejack23_2.verky.ui.viewmodel.ChatViewModel
+import kotlin.math.log
 
+@AndroidEntryPoint
 class ChatFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = ChatFragment()
-    }
-
-    private val viewModel: ChatViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
-    }
+    private var _binding: FragmentChatBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var chatAdapter: ChatAdapter
+    private val chatViewModel: ChatViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_chat, container, false)
+        _binding = FragmentChatBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        chatAdapter = ChatAdapter(emptyList())
+        binding.chatRecyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = chatAdapter
+        }
+
+        chatViewModel.chats.observe(viewLifecycleOwner, Observer { chats ->
+            chatAdapter.submitList(chats)
+            // Scroll to the bottom when new chats are added
+            binding.chatRecyclerView.scrollToPosition(chats.size - 1)
+        })
+
+
+        chatViewModel.chats.observe(viewLifecycleOwner, Observer { chats ->
+            chatAdapter.updateChats(chats)
+            binding.chatRecyclerView.scrollToPosition(chats.size - 1)
+        })
+
     }
 }

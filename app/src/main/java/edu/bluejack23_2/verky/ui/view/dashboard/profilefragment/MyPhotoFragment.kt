@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import edu.bluejack23_2.verky.R
 import edu.bluejack23_2.verky.data.model.LoggedUser
-import edu.bluejack23_2.verky.databinding.FragmentAboutMeBinding
 import edu.bluejack23_2.verky.databinding.FragmentMyPhotoBinding
 import edu.bluejack23_2.verky.ui.adapter.MyPhotoAdapter
 import edu.bluejack23_2.verky.ui.viewmodel.MyPhotoViewModel
@@ -20,11 +18,6 @@ class MyPhotoFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var photoAdapter: MyPhotoAdapter
     private val photoViewModel: MyPhotoViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

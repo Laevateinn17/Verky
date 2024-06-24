@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -41,6 +40,7 @@ class AuthViewModel @Inject constructor(
     init{
         if(currentUser != null){
             _loginFlow.value = Resource.Success(authRepository.currentUser!!)
+            Log.e("curreuser", currentUser!!.uid)
             fetchUserLogged(authRepository.currentUser!!.uid)
         }
 //        Log.e("user", authRepository.currentUser!!.uid)

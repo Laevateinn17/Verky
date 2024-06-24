@@ -23,11 +23,7 @@ import edu.bluejack23_2.verky.ui.view.dashboard.DashboardActivity
 import edu.bluejack23_2.verky.ui.viewmodel.AuthViewModel
 import edu.bluejack23_2.verky.util.toast
 import kotlinx.coroutines.launch
-import java.security.KeyStore
 import java.util.concurrent.Executor
-import javax.crypto.Cipher
-import javax.crypto.KeyGenerator
-import javax.crypto.SecretKey
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity(){
@@ -129,7 +125,8 @@ class LoginActivity : AppCompatActivity(){
 
                     is Resource.Success<*> -> {
                         val userID = sharedPreferences.getString("userID", null)
-                        if (userID.isNullOrEmpty() || LoggedUser.getInstance().getUser()!!.id != userID) {
+                               // || LoggedUser.getInstance().getUser()!!.id != userID
+                        if (userID.isNullOrEmpty() ) {
                             showBiometricLoginConfirmationDialog()
                         } else {
                             navigateToHome()

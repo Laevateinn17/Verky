@@ -34,6 +34,6 @@
 
     <string name="my_interest_label">My Interests</string>
     <string name="register_my_interest_label">Share some things you think are cool</string>
-
+    <string name="add_pic_label">Add a pic so we can see who you are</string>
 
 </resources>

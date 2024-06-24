@@ -15,13 +15,11 @@ import edu.bluejack23_2.verky.databinding.FragmentStep1RegisterBinding
 class Step1RegisterFragment : Fragment() {
 
     private lateinit var binding : FragmentStep1RegisterBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.e("radioo", "testing")
         super.onCreate(savedInstanceState)
 
-        view?.findViewById<RadioGroup>(R.id.genderRadioGroup)?.setOnCheckedChangeListener{radioGroup, id ->
-            Log.e("radiooo", id.toString())
-        }
+
 
     }
 

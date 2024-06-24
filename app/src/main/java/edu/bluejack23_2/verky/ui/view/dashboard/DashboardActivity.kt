@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import edu.bluejack23_2.verky.R
 import edu.bluejack23_2.verky.databinding.ActivityDashboardBinding
+import edu.bluejack23_2.verky.ui.view.dashboard.chatfragment.ChatFragment
 import edu.bluejack23_2.verky.ui.view.dashboard.profilefragment.ProfileFragment
 
 class DashboardActivity : AppCompatActivity() {

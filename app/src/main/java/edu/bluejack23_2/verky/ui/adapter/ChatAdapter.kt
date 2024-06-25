@@ -19,7 +19,7 @@ class ChatAdapter : ListAdapter<Chat, ChatAdapter.ChatViewHolder>(ChatDiffCallba
     inner class ChatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nameTextView : TextView = itemView.findViewById(R.id.chat_item_name)
         val imageChat : ImageView = itemView.findViewById(R.id.chat_item_image)
-//        val newMessageTextView : TextView = itemView.findViewById(R.id.chat_item_newmessage)
+        val newMessageTextView : TextView = itemView.findViewById(R.id.chat_item_newmessage)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {
@@ -35,9 +35,9 @@ class ChatAdapter : ListAdapter<Chat, ChatAdapter.ChatViewHolder>(ChatDiffCallba
             .placeholder(R.color.gray)
             .into(holder.imageChat)
         val statusTrueCount = chat.countMessagesWithStatusTrue()
-//        holder.newMessageTextView.text = "$statusTrueCount new message!"
+        holder.newMessageTextView.text = "$statusTrueCount new message!"
 
-//        holder.newMessageTextView.visibility = if (statusTrueCount == 0) View.VISIBLE else View.GONE
+        holder.newMessageTextView.visibility = if (statusTrueCount == 0) View.GONE else View.VISIBLE
     }
 
     private class ChatDiffCallback : DiffUtil.ItemCallback<Chat>() {

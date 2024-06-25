@@ -20,14 +20,20 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             >
-    <Button
-        android:id="@+id/backButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Back"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        />
+            <Button
+                android:id="@+id/backButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Back"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:fontFamily="@font/urbanist_semibold"
+                android:textAllCaps="false"
+                android:textSize="26sp"
+                android:textAlignment="textStart"
+                android:paddingHorizontal="16dp"
+                android:background="@null"
+                />
     <LinearLayout
         android:id="@+id/religionLayout"
         android:layout_width="match_parent"

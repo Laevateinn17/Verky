@@ -29,11 +29,19 @@
     <string name="full_name_input_label">Full Name</string>
     <string name="birth_date_input_label">Birth Date</string>
     <string name="gender_input_label2">Gender</string>
-
     <string name="biometric_login">biometric</string>
-
     <string name="my_interest_label">My Interests</string>
     <string name="register_my_interest_label">Share some things you think are cool</string>
+    <string name="add_pic_label">Add a pic so we can see who you are</string>
+    <string name="settings_label">Settings</string>
+    <string name="sign_out_button">Sign out</string>
+    <string name="notification_label">Notification</string>
+    <string name="privacy_label">Privacy</string>
+    <string name="receive_notification_label">Receive notification</string>
+    <string name="incognito_mode_label">Incognito mode</string>
+    <string name="blocked_accounts_label">Blocked accounts</string>
+    <string name="application_settings_label">Application settings</string>
+    <string name="dark_mode_label">Dark mode</string>
 
 
 </resources>

@@ -3,11 +3,16 @@ package edu.bluejack23_2.verky.ui.view.auth
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack23_2.verky.R
 import edu.bluejack23_2.verky.databinding.ActivityRegisterBinding
 import edu.bluejack23_2.verky.databinding.FragmentStep1RegisterBinding
 
-class RegisterActivity : AppCompatActivity(), Step1RegisterFragment.OnContinueListener, Step2RegisterFragment.OnContinueListener, Step3RegisterFragment.OnContinueListener {
+@AndroidEntryPoint
+class RegisterActivity : AppCompatActivity(),
+        Step1RegisterFragment.OnContinueListener,
+        Step2RegisterFragment.OnContinueListener,
+        Step3RegisterFragment.OnContinueListener {
 
     private lateinit var binding : ActivityRegisterBinding;
 
@@ -27,7 +32,6 @@ class RegisterActivity : AppCompatActivity(), Step1RegisterFragment.OnContinueLi
         setContentView(binding.root)
 
         init()
-
         supportFragmentManager.beginTransaction().replace(R.id.registerFragmentContainer, step1Fragment).addToBackStack(null).commit()
     }
 
@@ -42,6 +46,5 @@ class RegisterActivity : AppCompatActivity(), Step1RegisterFragment.OnContinueLi
     override fun goToFragmentRegist1() {
         supportFragmentManager.beginTransaction().replace(R.id.registerFragmentContainer, step1Fragment).addToBackStack(null).commit()
     }
-
 
 }

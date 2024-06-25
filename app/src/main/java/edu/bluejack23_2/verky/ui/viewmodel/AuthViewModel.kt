@@ -3,6 +3,8 @@ package edu.bluejack23_2.verky.ui.viewmodel
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
@@ -29,6 +31,13 @@ class AuthViewModel @Inject constructor(
 
 //    private val _signUpFlow = MutableStateFlow<Resource<FirebaseUser>?>(null)
 //    val signUpFlow: StateFlow<Resource<FirebaseUser>?> = _signUpFlow
+
+    private val _religionData = MutableLiveData<List<String>>()
+    val religionData: LiveData<List<String>> = _religionData
+
+    private val _interestData = MutableLiveData<List<String>>()
+    val interestData: LiveData<List<String>> = _interestData
+
 
     private val sharedPreferences: SharedPreferences by lazy {
         context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
@@ -94,11 +103,26 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    private fun clearCredentialsFromPreferences() {
-        val editor = sharedPreferences.edit()
-        editor.remove("email")
-        editor.remove("password")
-        editor.apply()
+    fun fetchReligionData() {
+        viewModelScope.launch {
+            try {
+                val data = userRepository.getReligionData()
+                _religionData.postValue(data)
+            } catch (e: Exception) {
+
+            }
+        }
+    }
+
+    fun fetchInterestData() {
+        viewModelScope.launch {
+            try {
+                val data = userRepository.getInterestData()
+                _interestData.postValue(data)
+            } catch (e: Exception) {
+
+            }
+        }
     }
 
     fun logOut(){

@@ -3,22 +3,27 @@ package edu.bluejack23_2.verky.data.user
 import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import edu.bluejack23_2.verky.data.Resource
 import edu.bluejack23_2.verky.data.model.LoggedUser
 import edu.bluejack23_2.verky.data.model.User
-import edu.bluejack23_2.verky.data.utils.await
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import kotlinx.coroutines.suspendCancellableCoroutine
 import javax.inject.Inject
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 
 class UserRepositoryImpl @Inject constructor(
     private val firebaseDatabase: FirebaseDatabase
 ) : UserRepository {
+
+    private val userRef: DatabaseReference by lazy {firebaseDatabase.getReference("users")}
+    private val religionRef: DatabaseReference by lazy { firebaseDatabase.getReference("religion") }
+    private val interestRef: DatabaseReference by lazy { firebaseDatabase.getReference("interest") }
+
     override suspend fun setLoggedUser(userId: String) {
-        val userData = firebaseDatabase.getReference("users").child(userId);
+        val userData = userRef.child(userId);
         userData.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val name = snapshot.child("name").getValue(String::class.java) ?: ""
@@ -42,4 +47,45 @@ class UserRepositoryImpl @Inject constructor(
             }
         })
     }
+
+
+    override suspend fun getReligionData(): List<String> = suspendCancellableCoroutine { continuation ->
+        val listener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val data = snapshot.children.mapNotNull { it.getValue(String::class.java) }
+                continuation.resume(data)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                continuation.resumeWithException(error.toException())
+            }
+        }
+
+        religionRef.addListenerForSingleValueEvent(listener)
+
+        continuation.invokeOnCancellation {
+            religionRef.removeEventListener(listener)
+        }
+    }
+
+    override suspend fun getInterestData(): List<String> = suspendCancellableCoroutine { continuation ->
+        val listener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val data = snapshot.children.mapNotNull { it.getValue(String::class.java) }
+                continuation.resume(data)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                continuation.resumeWithException(error.toException())
+            }
+        }
+
+        interestRef.addListenerForSingleValueEvent(listener)
+
+        continuation.invokeOnCancellation {
+            interestRef.removeEventListener(listener)
+        }
+    }
+
+
 }

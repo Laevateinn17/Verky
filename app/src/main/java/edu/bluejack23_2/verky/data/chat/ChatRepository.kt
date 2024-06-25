@@ -5,5 +5,5 @@ import edu.bluejack23_2.verky.data.model.Message
 
 interface ChatRepository {
     fun sendMessage(message: Message, chat: Chat)
-    fun getChatList(userID: String, callback: (List<Chat>) -> Unit)
+    fun getChatList(userID: String, callback:(List<Chat>) -> Unit)
 }

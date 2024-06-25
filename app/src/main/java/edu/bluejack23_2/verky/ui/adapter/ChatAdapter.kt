@@ -1,5 +1,6 @@
 package edu.bluejack23_2.verky.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +19,7 @@ class ChatAdapter : ListAdapter<Chat, ChatAdapter.ChatViewHolder>(ChatDiffCallba
     inner class ChatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nameTextView : TextView = itemView.findViewById(R.id.chat_item_name)
         val imageChat : ImageView = itemView.findViewById(R.id.chat_item_image)
-        val newMessageTextView : TextView = itemView.findViewById(R.id.chat_item_newmessage)
+//        val newMessageTextView : TextView = itemView.findViewById(R.id.chat_item_newmessage)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {
@@ -30,13 +31,13 @@ class ChatAdapter : ListAdapter<Chat, ChatAdapter.ChatViewHolder>(ChatDiffCallba
         val chat = getItem(position)
         holder.nameTextView.text = chat.partnerUser?.name ?: "Unknown"
         Glide.with(holder.itemView.context)
-            .load(chat.partnerUser?.profilePicture)
+            .load(chat.partnerUser?.profile_picture)
             .placeholder(R.color.gray)
             .into(holder.imageChat)
         val statusTrueCount = chat.countMessagesWithStatusTrue()
-        holder.newMessageTextView.text = "$statusTrueCount new message!"
+//        holder.newMessageTextView.text = "$statusTrueCount new message!"
 
-        holder.newMessageTextView.visibility = if (statusTrueCount == 0) View.VISIBLE else View.GONE
+//        holder.newMessageTextView.visibility = if (statusTrueCount == 0) View.VISIBLE else View.GONE
     }
 
     private class ChatDiffCallback : DiffUtil.ItemCallback<Chat>() {

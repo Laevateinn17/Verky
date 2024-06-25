@@ -29,18 +29,10 @@ class UserRepositoryImpl @Inject constructor(
                 val activities = snapshot.child("activities").children.mapNotNull { it.getValue(String::class.java) }
                 val incognitoMode = snapshot.child("incognito_mode").getValue(Boolean::class.java) ?: false
                 val profilePicture = snapshot.child("profile_picture").getValue(String::class.java) ?: ""
-
-                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                val dob: Date? = try {
-                    dateFormat.parse(dobString)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    null
-                }
-
+2
                 val galleryPicture = snapshot.child("gallery_picture").children.mapNotNull { it.getValue(String::class.java) }
 
-                val user = User(userId, name, email, dob!!, gender, religion, activities, incognitoMode, profilePicture, galleryPicture)
+                val user = User(userId, name, email, dobString, gender, religion, activities, incognitoMode, profilePicture, galleryPicture)
                 LoggedUser.getInstance().setUser(user)
                 Resource.Success(user)
             }

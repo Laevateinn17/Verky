@@ -37,16 +37,19 @@ class AboutMeFragment : Fragment() {
         user?.let {
             binding.nameET.setText(it.name)
 
-            val cal = Calendar.getInstance()
-            cal.time = it.dob
+            val dobParts = it.dob.split("-")
+            if (dobParts.size == 3) {
+                val year = dobParts[0].toInt()
+                val month = dobParts[1].toInt()
+                val day = dobParts[2].toInt()
 
-            val day = cal.get(Calendar.DAY_OF_MONTH)
-            val month = cal.get(Calendar.MONTH) + 1
-            val year = cal.get(Calendar.YEAR)
+                val cal = Calendar.getInstance()
+                cal.set(year, month - 1, day)
 
-            binding.dayDOB.setText(day.toString())
-            binding.dayMonth.setText(month.toString())
-            binding.dayYear.setText(year.toString())
+                binding.dayDOB.setText(day.toString())
+                binding.dayMonth.setText(month.toString())
+                binding.dayYear.setText(year.toString())
+            }
 
             if (it.gender == "Male") {
                 binding.MaleRB.isChecked = true

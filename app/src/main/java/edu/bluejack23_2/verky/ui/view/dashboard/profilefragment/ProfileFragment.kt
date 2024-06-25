@@ -60,7 +60,7 @@ class ProfileFragment : Fragment() {
 
             val profileImageView = view.findViewById<ImageView>(R.id.ProfilePicture)
             Glide.with(this)
-                .load(profile.profilePicture)
+                .load(profile.profile_picture)
                 .placeholder(R.color.gray)
                 .into(profileImageView)
 

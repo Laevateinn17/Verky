@@ -35,7 +35,7 @@ class MyPhotoFragment : Fragment() {
 
         val loggedUser = LoggedUser.getInstance().getUser()
         loggedUser?.let {
-            photoViewModel.setPhotos(it.galleryPicture)
+            photoViewModel.setPhotos(it.gallery_picture)
         }
 
         return view

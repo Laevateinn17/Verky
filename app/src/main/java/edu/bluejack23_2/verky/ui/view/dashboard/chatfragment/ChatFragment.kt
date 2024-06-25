@@ -39,23 +39,20 @@ class ChatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        chatAdapter = ChatAdapter(emptyList())
+        chatAdapter = ChatAdapter()
         binding.chatRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = chatAdapter
         }
 
-        chatViewModel.chats.observe(viewLifecycleOwner, Observer { chats ->
+        chatViewModel.chatList.observe(viewLifecycleOwner, Observer { chats ->
             chatAdapter.submitList(chats)
-            // Scroll to the bottom when new chats are added
             binding.chatRecyclerView.scrollToPosition(chats.size - 1)
         })
+    }
 
-
-        chatViewModel.chats.observe(viewLifecycleOwner, Observer { chats ->
-            chatAdapter.updateChats(chats)
-            binding.chatRecyclerView.scrollToPosition(chats.size - 1)
-        })
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

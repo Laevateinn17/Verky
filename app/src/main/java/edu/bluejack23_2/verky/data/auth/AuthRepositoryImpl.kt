@@ -27,7 +27,6 @@ class AuthRepositoryImpl @Inject constructor(
         return try{
             val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
             userRepository.setLoggedUser(result.user!!.uid)
-            Log.e("useruser", result.user!!.uid)
             Resource.Success(result.user!!)
         }catch (e: Exception){
             e.printStackTrace();

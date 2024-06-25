@@ -28,10 +28,4 @@ object RepositoryModule {
     fun providesUserRepo(userRepositoryImpl: UserRepositoryImpl) : UserRepository{
         return userRepositoryImpl
     }
-
-    @Provides
-    @ViewModelScoped
-    fun providesChatRepo(chatRepositoryImpl: ChatRepositoryImpl) : ChatRepository{
-        return chatRepositoryImpl
-    }
 }

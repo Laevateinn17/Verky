@@ -34,5 +34,9 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.backButton.setOnClickListener{
+            finish()
+        }
+
     }
 }

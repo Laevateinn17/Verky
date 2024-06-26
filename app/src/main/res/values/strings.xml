@@ -2,9 +2,9 @@
     <string name="app_name">Verky</string>
     <string name="login_page_welcome_message">Welcome back!</string>
     <string name="register_page_start_message">Let\'s start by introducing yourself</string>
-    <string name="email_input_hint">Email</string>
-    <string name="password_input_hint">Password</string>
-    <string name="login_button">Login</string>
+    <string name="email_input_hint" translatable="false">Email</string>
+    <string name="password_input_hint" translatable="false">Password</string>
+    <string name="login_button" translatable="false">Login</string>
     <string name="register_message">Don\'t have an account?</string>
     <string name="register_link">Register here</string>
     <string name="name_input_label">Your name</string>
@@ -17,19 +17,19 @@
     <string name="gender_input_male">Male</string>
     <string name="gender_input_female">Female</string>
     <string name="email_input_label">Your Email</string>
-    <string name="email_input_label2">Email</string>
+    <string name="email_input_label2" translatable="false">Email</string>
     <string name="password_input_label">Your Password</string>
-    <string name="back_button">Back</string>
-    <string name="continue_button">Continue</string>
-    <string name="register_button">Register</string>
+    <string name="back_button" translatable="false">Back</string>
+    <string name="continue_button" translatable="false">Continue</string>
+    <string name="register_button" translatable="false">Register</string>
     <string name="religion_label">What\'s your religion?</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="my_information_label">My Information</string>
     <string name="full_name_input_label">Full Name</string>
     <string name="birth_date_input_label">Birth Date</string>
     <string name="gender_input_label2">Gender</string>
-    <string name="biometric_login">biometric</string>
+    <string name="biometric_login" translatable="false">biometric</string>
     <string name="my_interest_label">My Interests</string>
     <string name="register_my_interest_label">Share some things you think are cool</string>
     <string name="add_pic_label">Add a pic so we can see who you are</string>
@@ -42,7 +42,7 @@
     <string name="blocked_accounts_label">Blocked accounts</string>
     <string name="application_settings_label">Application settings</string>
     <string name="dark_mode_label">Dark mode</string>
-    <string name="register">Register</string>
+    <string name="register" translatable="false">Register</string>
 
 
 </resources>

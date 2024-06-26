@@ -125,9 +125,13 @@ class LoginActivity : AppCompatActivity(){
 
                     is Resource.Success<*> -> {
                         val userID = sharedPreferences.getString("userID", null)
-                               // || LoggedUser.getInstance().getUser()!!.id != userID
-                        if (userID.isNullOrEmpty() ) {
-                            showBiometricLoginConfirmationDialog()
+                        val biometricManager = BiometricManager.from(this@LoginActivity)
+                        if (userID.isNullOrEmpty() || userID.toString() != viewModel.currentUser?.uid ) {
+                            when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL)) {
+                                BiometricManager.BIOMETRIC_SUCCESS -> {
+                                    showBiometricLoginConfirmationDialog()
+                                }
+                            }
                         } else {
                             navigateToHome()
                         }

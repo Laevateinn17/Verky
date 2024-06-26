@@ -19,7 +19,7 @@
             android:id="@+id/backButton"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginVertical="10dp"
+            android:layout_marginVertical="15dp"
             android:background="@drawable/icon_arrow_left" />
         <TextView
             android:layout_width="wrap_content"

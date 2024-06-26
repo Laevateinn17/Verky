@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.view.menu.MenuView.ItemView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -35,9 +36,12 @@ class ChatAdapter : ListAdapter<Chat, ChatAdapter.ChatViewHolder>(ChatDiffCallba
             .placeholder(R.color.gray)
             .into(holder.imageChat)
         val statusTrueCount = chat.countMessagesWithStatusTrue()
-        holder.newMessageTextView.text = "$statusTrueCount new message!"
 
-        holder.newMessageTextView.visibility = if (statusTrueCount == 0) View.GONE else View.VISIBLE
+        holder.newMessageTextView.text = if (statusTrueCount == 0) "No new message" else "$statusTrueCount new message!"
+        val gray = ContextCompat.getColor(holder.itemView.context, R.color.gray)
+        val primary = ContextCompat.getColor(holder.itemView.context, R.color.primary)
+        holder.newMessageTextView.setTextColor(if (statusTrueCount == 0) gray else primary)
+
     }
 
     private class ChatDiffCallback : DiffUtil.ItemCallback<Chat>() {

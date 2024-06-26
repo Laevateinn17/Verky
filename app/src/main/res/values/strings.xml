@@ -42,6 +42,7 @@
     <string name="blocked_accounts_label">Blocked accounts</string>
     <string name="application_settings_label">Application settings</string>
     <string name="dark_mode_label">Dark mode</string>
+    <string name="register">Register</string>
 
 
 </resources>

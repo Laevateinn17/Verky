@@ -73,10 +73,10 @@
         </LinearLayout>
     </ScrollView>
     <Button
-        android:id="@+id/continueButton"
+        android:id="@+id/registerButton"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="@string/continue_button"
+        android:text="@string/register"
         android:layout_marginHorizontal="32dp"
         android:background="@drawable/custom_button"
         android:textAllCaps="false"

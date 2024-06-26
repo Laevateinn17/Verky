@@ -8,10 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack23_2.verky.data.model.User
 import edu.bluejack23_2.verky.databinding.FragmentStep1RegisterBinding
 import edu.bluejack23_2.verky.ui.viewmodel.AuthViewModel
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class Step1RegisterFragment : Fragment() {
@@ -22,7 +24,7 @@ class Step1RegisterFragment : Fragment() {
     private var listener: OnContinueListener? = null
 
     interface OnContinueListener {
-        fun goToFragmentRegist2()
+        fun goToFragmentRegist2(bundle : Bundle)
     }
 
     override fun onAttach(context: Context) {
@@ -57,16 +59,21 @@ class Step1RegisterFragment : Fragment() {
             val email = binding.registerEmailInput.text.toString().trim()
             val password = binding.registerPasswordInput.text.toString().trim()
 
-            if (validateInputs(name, day, month, year, email, password)) {
-                val user = User(name = name, email = email, dob = "$day-$month-$year")
-                authViewModel.setUser(user)
-                listener?.goToFragmentRegist2()
+            lifecycleScope.launch {
+                if (validateInputs(name, day, month, year, email, password)) {
+                    val gender = if (binding.registerMaleButton.isChecked) "Male" else "Female"
+                    val user = User(name = name, email = email, dob = "$year-$month-$day", gender = gender)
+                    val bundle = Bundle().apply {
+                        putParcelable("user", user)
+                        putString("password", password)
+                    }
+                    listener?.goToFragmentRegist2(bundle)
+                }
             }
         }
     }
 
-
-    private fun validateInputs(name: String, day: String, month: String, year: String, email: String, password: String): Boolean {
+    private suspend fun validateInputs(name: String, day: String, month: String, year: String, email: String, password: String): Boolean {
         if (name.isEmpty()) {
             Toast.makeText(requireContext(), "Name is empty", Toast.LENGTH_SHORT).show()
             return false
@@ -96,6 +103,11 @@ class Step1RegisterFragment : Fragment() {
             return false
         }
 
+        if (authViewModel.isEmailAlreadyUsed(email)) {
+            Toast.makeText(requireContext(), "Email already used", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
         if (password.isEmpty()) {
             Toast.makeText(requireContext(), "Password is empty", Toast.LENGTH_SHORT).show()
             return false
@@ -104,6 +116,11 @@ class Step1RegisterFragment : Fragment() {
         val alphanumericRegex = Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}\$")
         if (!alphanumericRegex.matches(password)) {
             Toast.makeText(requireContext(), "Password must contain at least one letter and one number", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (!binding.registerMaleButton.isChecked && !binding.registerFemaleButton.isChecked) {
+            Toast.makeText(requireContext(), "Please select your gender", Toast.LENGTH_SHORT).show()
             return false
         }
 

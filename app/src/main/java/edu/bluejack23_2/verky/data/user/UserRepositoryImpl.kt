@@ -10,6 +10,7 @@ import edu.bluejack23_2.verky.data.Resource
 import edu.bluejack23_2.verky.data.model.LoggedUser
 import edu.bluejack23_2.verky.data.model.User
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -86,6 +87,27 @@ class UserRepositoryImpl @Inject constructor(
             interestRef.removeEventListener(listener)
         }
     }
+
+    override suspend fun isEmailAlreadyUsed(email: String): Boolean {
+        val snapshot = userRef.orderByChild("email").equalTo(email).get().await()
+        return snapshot.exists()
+    }
+
+    override suspend fun addUser(user: User, userID : String, onSuccess: () -> Unit, onFailure: (String) -> Unit) {
+        if (userID != null) {
+            userRef.child(userID).setValue(user)
+                .addOnSuccessListener {
+                    onSuccess()
+                }
+                .addOnFailureListener { exception ->
+                    onFailure(exception.message ?: "Unknown error occurred")
+                }
+        } else {
+            onFailure("Failed to generate user ID")
+        }
+    }
+
+
 
 
 }

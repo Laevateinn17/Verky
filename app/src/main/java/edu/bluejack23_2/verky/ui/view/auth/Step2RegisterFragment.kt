@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -22,25 +21,22 @@ import edu.bluejack23_2.verky.ui.adapter.InterestAdapter
 import edu.bluejack23_2.verky.ui.adapter.ReligionAdapter
 import edu.bluejack23_2.verky.ui.viewmodel.AuthViewModel
 
-
 @AndroidEntryPoint
 class Step2RegisterFragment : Fragment() {
-
 
     private var _binding: FragmentStep2RegisterBinding? = null
     private val binding get() = _binding!!
 
     private var listener: OnContinueListener? = null
     private lateinit var religionRecyclerView: RecyclerView
-    private lateinit var religionAdapter : ReligionAdapter
+    private lateinit var religionAdapter: ReligionAdapter
     private lateinit var interestAdapter: InterestAdapter
     private lateinit var interestRecyclerView: RecyclerView
-    private val authViewModel : AuthViewModel by activityViewModels()
-
-    private lateinit var user : User;
+    private val authViewModel: AuthViewModel by activityViewModels()
+    private var user: User? = null
 
     interface OnContinueListener {
-        fun goToFragmentRegist3()
+        fun goToFragmentRegist3(bundle : Bundle)
         fun goToFragmentRegist1()
     }
 
@@ -60,19 +56,21 @@ class Step2RegisterFragment : Fragment() {
         _binding = FragmentStep2RegisterBinding.inflate(inflater, container, false)
         religionRecyclerView = binding.religionRecyclerView
         interestRecyclerView = binding.interestRecyclerView
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.backButton.setOnClickListener{
+        binding.backButton.setOnClickListener {
             listener?.goToFragmentRegist1()
         }
 
-        authViewModel.registUser.observe(viewLifecycleOwner, Observer { registUser ->
-            user = registUser
-        })
+        user = arguments?.getParcelable("user")
+        user?.let { authViewModel.setUser(it) }
+
+        val password = arguments?.getString("password")
 
         authViewModel.fetchReligionData()
         authViewModel.fetchInterestData()
@@ -86,16 +84,16 @@ class Step2RegisterFragment : Fragment() {
         interestLayoutManager.justifyContent = JustifyContent.FLEX_START
 
         religionAdapter = ReligionAdapter(emptyList()) { selectedReligion ->
-            user.religion = selectedReligion
-            authViewModel.setUser(user)
+            user?.religion = selectedReligion
+            user?.let { authViewModel.setUser(it) }
         }
 
         religionRecyclerView.layoutManager = religionLayoutManager
         religionRecyclerView.adapter = religionAdapter
 
         interestAdapter = InterestAdapter(emptyList()) { selectedInterest ->
-            user.interest = selectedInterest
-            authViewModel.setUser(user)
+            user?.interest = selectedInterest
+            user?.let { authViewModel.setUser(it) }
         }
         interestRecyclerView.layoutManager = interestLayoutManager
         interestRecyclerView.adapter = interestAdapter
@@ -104,7 +102,10 @@ class Step2RegisterFragment : Fragment() {
 
         binding.continueButton.setOnClickListener {
             if (validateSelections()) {
-                listener?.goToFragmentRegist3()
+                val bundle = Bundle()
+                bundle.putParcelable("user", user)
+                bundle.putString("password", password)
+                listener?.goToFragmentRegist3(bundle)
             }
         }
     }
@@ -120,21 +121,14 @@ class Step2RegisterFragment : Fragment() {
 
     private fun validateSelections(): Boolean {
 
-        Log.d("user", user.name)
-
-        if (user?.interest!!.isEmpty()) {
+        if (user!!.interest.isEmpty()) {
             Toast.makeText(requireContext(), "Interest must be selected", Toast.LENGTH_SHORT).show()
-            return false;
-        }
-        else if(user.religion == ""){
+            return false
+        } else if (user!!.religion == "") {
             Toast.makeText(requireContext(), "Religion must be selected", Toast.LENGTH_SHORT).show()
-            return false;
-        }
-        else{
-            return true;
+            return false
+        } else {
+            return true
         }
     }
-
-
-
 }

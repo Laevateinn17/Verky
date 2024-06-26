@@ -3,6 +3,7 @@ package edu.bluejack23_2.verky.ui.viewmodel
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -29,8 +30,8 @@ class AuthViewModel @Inject constructor(
     private val _loginFlow = MutableStateFlow<Resource<FirebaseUser>?>(null)
     val loginFlow: StateFlow<Resource<FirebaseUser>?> = _loginFlow
 
-//    private val _signUpFlow = MutableStateFlow<Resource<FirebaseUser>?>(null)
-//    val signUpFlow: StateFlow<Resource<FirebaseUser>?> = _signUpFlow
+    private val _signUpFlow = MutableStateFlow<Resource<FirebaseUser>?>(null)
+    val signUpFlow: StateFlow<Resource<FirebaseUser>?> = _signUpFlow
 
     private val _religionData = MutableLiveData<List<String>>()
     val religionData: LiveData<List<String>> = _religionData
@@ -83,26 +84,14 @@ class AuthViewModel @Inject constructor(
         _loginFlow.value = result
     }
 
-//    fun signUp(name : String, email: String, password : String) = viewModelScope.launch {
-//        _loginFlow.value = Resource.Loading
-//        val result = repository.signUp(name, email, password)
-//        _loginFlow.value = result
-//    }
+    fun signUp(name : String, email: String, password : String) = viewModelScope.launch {
+        _signUpFlow.value = Resource.Loading
+        val result = authRepository.signUp(name, email, password)
+        _signUpFlow.value = result
+    }
 
-    fun updateUser(updatedUser: User) {
-        val currentUser = _registUser.value ?: User()
-        currentUser.apply {
-            name = updatedUser.name
-            email = updatedUser.email
-            dob = updatedUser.dob
-            gender = updatedUser.gender
-            religion = updatedUser.religion
-            interest = updatedUser.interest
-            incognito_mode = updatedUser.incognito_mode
-            profile_picture = updatedUser.profile_picture
-            gallery_picture = updatedUser.gallery_picture
-        }
-        _registUser.value = currentUser
+    suspend fun isEmailAlreadyUsed(email: String): Boolean {
+        return userRepository.isEmailAlreadyUsed(email)
     }
 
     fun saveCredentials(email: String, password: String, userId: String) {
@@ -159,7 +148,19 @@ class AuthViewModel @Inject constructor(
     fun logOut(){
         authRepository.logOut();
         _loginFlow.value = null
-//        _signUpFlow.value = null
+        _signUpFlow.value = null
+    }
+
+    fun uploadImages(
+        images: List<Uri>,
+        onSuccess: (List<String>) -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+        authRepository.uploadImagesToFirebase(images, onSuccess, onFailure)
+    }
+
+    suspend fun addUser(user: User, onSuccess: () -> Unit, onFailure: (String) -> Unit) {
+        currentUser?.let { userRepository.addUser(user, it.uid,  onSuccess, onFailure) }
     }
 
 }

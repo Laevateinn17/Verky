@@ -9,13 +9,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
+import edu.bluejack23_2.verky.data.Resource
+import edu.bluejack23_2.verky.data.model.User
 import edu.bluejack23_2.verky.databinding.FragmentStep3RegisterBinding
 import edu.bluejack23_2.verky.ui.adapter.GalleryAdapter
 import edu.bluejack23_2.verky.ui.viewmodel.AuthViewModel
+import kotlinx.coroutines.launch
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 @AndroidEntryPoint
 class Step3RegisterFragment : Fragment() {
@@ -26,10 +33,13 @@ class Step3RegisterFragment : Fragment() {
 
     interface OnContinueListener {
         fun goToFragmentRegist2()
+        fun registerCompleted()
     }
 
 
     private var listener: OnContinueListener? = null
+    private var user: User? = null
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -57,10 +67,71 @@ class Step3RegisterFragment : Fragment() {
             listener?.goToFragmentRegist2()
         }
 
+        user = arguments?.getParcelable("user")
+        user?.let { authViewModel.setUser(it) }
+
         val recyclerView: RecyclerView = binding.ImageRecyclerView
         recyclerView.layoutManager = GridLayoutManager(context, 3)
         val adapter = GalleryAdapter(this, authViewModel)
         recyclerView.adapter = adapter
+
+        binding.registerButton.setOnClickListener {
+            val images = authViewModel.images.value?.filterNotNull()
+            if (!images.isNullOrEmpty()) {
+                authViewModel.uploadImages(images,
+                    onSuccess = { imageUrls ->
+                        user?.profile_picture = imageUrls[0]
+                        user?.gallery_picture = imageUrls
+                        register()
+                    },
+                    onFailure = { errorMessage ->
+                        Toast.makeText(
+                            requireContext(),
+                            "Failed to upload images: $errorMessage",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                )
+            }
+            else{
+                Toast.makeText(requireContext(), "Image must be uploaded minimum 1", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun register() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            val password = arguments?.getString("password")
+            if (password != null && user != null) {
+                authViewModel.signUp(user!!.name, user!!.email, password)
+                authViewModel.signUpFlow.collect { resource ->
+                    when (resource) {
+                        is Resource.Loading -> {
+                            // Handle loading state
+                        }
+                        is Resource.Success -> {
+                            authViewModel.addUser(user = user!!,
+                                onSuccess = {
+                                    listener?.registerCompleted()
+                                },
+                                onFailure = { errorMessage ->
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "Error Registering the User",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            )
+                        }
+                        is Resource.Failure -> {
+                            Toast.makeText(requireContext(), "Error Registering the User", Toast.LENGTH_SHORT).show()
+                        }
+
+                        null -> Toast.makeText(requireContext(), "null!", Toast.LENGTH_SHORT)
+                    }
+                }
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -1,5 +1,6 @@
 package edu.bluejack23_2.verky.ui.view.auth
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +8,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack23_2.verky.R
 import edu.bluejack23_2.verky.databinding.ActivityRegisterBinding
 import edu.bluejack23_2.verky.databinding.FragmentStep1RegisterBinding
+import edu.bluejack23_2.verky.util.toast
 
 @AndroidEntryPoint
 class RegisterActivity : AppCompatActivity(),
@@ -39,12 +41,23 @@ class RegisterActivity : AppCompatActivity(),
         supportFragmentManager.beginTransaction().replace(R.id.registerFragmentContainer, step2Fragment).addToBackStack(null).commit()
     }
 
-    override fun goToFragmentRegist3() {
+    override fun registerCompleted() {
+        toast("Success creating a user")
+        startActivity(Intent(this, LoginActivity::class.java))
+    }
+
+    override fun goToFragmentRegist3(bundle: Bundle) {
+        step3Fragment.arguments = bundle
         supportFragmentManager.beginTransaction().replace(R.id.registerFragmentContainer, step3Fragment).addToBackStack(null).commit()
     }
 
     override fun goToFragmentRegist1() {
         supportFragmentManager.beginTransaction().replace(R.id.registerFragmentContainer, step1Fragment).addToBackStack(null).commit()
+    }
+
+    override fun goToFragmentRegist2(bundle: Bundle) {
+        step2Fragment.arguments = bundle
+        supportFragmentManager.beginTransaction().replace(R.id.registerFragmentContainer, step2Fragment).addToBackStack(null).commit()
     }
 
 }

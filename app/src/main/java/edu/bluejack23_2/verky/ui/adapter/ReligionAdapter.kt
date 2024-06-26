@@ -7,7 +7,7 @@ import android.widget.RadioButton
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack23_2.verky.R
 
-class ReligionAdapter(private var items: List<String>) : RecyclerView.Adapter<ReligionAdapter.RadioButtonViewHolder>() {
+class ReligionAdapter(private var items: List<String>, private val onItemClick: (String) -> Unit) : RecyclerView.Adapter<ReligionAdapter.RadioButtonViewHolder>() {
 
     private var selectedItemPosition = -1
 
@@ -33,11 +33,13 @@ class ReligionAdapter(private var items: List<String>) : RecyclerView.Adapter<Re
 
             itemView.setOnClickListener {
                 selectedItemPosition = position
+                onItemClick(items[position])
                 notifyDataSetChanged()
             }
 
             radioButton.setOnClickListener {
                 selectedItemPosition = position
+                onItemClick(items[position])
                 notifyDataSetChanged()
             }
         }

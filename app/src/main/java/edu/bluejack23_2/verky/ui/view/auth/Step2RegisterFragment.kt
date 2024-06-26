@@ -1,19 +1,22 @@
 package edu.bluejack23_2.verky.ui.view.auth
 
-import android.R
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import dagger.hilt.android.AndroidEntryPoint
+import edu.bluejack23_2.verky.data.model.User
 import edu.bluejack23_2.verky.databinding.FragmentStep2RegisterBinding
 import edu.bluejack23_2.verky.ui.adapter.InterestAdapter
 import edu.bluejack23_2.verky.ui.adapter.ReligionAdapter
@@ -32,7 +35,9 @@ class Step2RegisterFragment : Fragment() {
     private lateinit var religionAdapter : ReligionAdapter
     private lateinit var interestAdapter: InterestAdapter
     private lateinit var interestRecyclerView: RecyclerView
-    private lateinit var authViewModel : AuthViewModel
+    private val authViewModel : AuthViewModel by activityViewModels()
+
+    private lateinit var user : User;
 
     interface OnContinueListener {
         fun goToFragmentRegist3()
@@ -60,15 +65,15 @@ class Step2RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.continueButton.setOnClickListener {
-            listener?.goToFragmentRegist3()
-        }
 
         binding.backButton.setOnClickListener{
             listener?.goToFragmentRegist1()
         }
 
-        authViewModel = ViewModelProvider(this).get(AuthViewModel::class.java)
+        authViewModel.registUser.observe(viewLifecycleOwner, Observer { registUser ->
+            user = registUser
+        })
+
         authViewModel.fetchReligionData()
         authViewModel.fetchInterestData()
 
@@ -80,15 +85,28 @@ class Step2RegisterFragment : Fragment() {
         interestLayoutManager.flexDirection = FlexDirection.ROW
         interestLayoutManager.justifyContent = JustifyContent.FLEX_START
 
-        religionAdapter = ReligionAdapter(emptyList())
+        religionAdapter = ReligionAdapter(emptyList()) { selectedReligion ->
+            user.religion = selectedReligion
+            authViewModel.setUser(user)
+        }
+
         religionRecyclerView.layoutManager = religionLayoutManager
         religionRecyclerView.adapter = religionAdapter
 
-        interestAdapter = InterestAdapter(emptyList())
+        interestAdapter = InterestAdapter(emptyList()) { selectedInterest ->
+            user.interest = selectedInterest
+            authViewModel.setUser(user)
+        }
         interestRecyclerView.layoutManager = interestLayoutManager
         interestRecyclerView.adapter = interestAdapter
 
         observeViewModel()
+
+        binding.continueButton.setOnClickListener {
+            if (validateSelections()) {
+                listener?.goToFragmentRegist3()
+            }
+        }
     }
 
     private fun observeViewModel() {
@@ -99,5 +117,24 @@ class Step2RegisterFragment : Fragment() {
             interestAdapter.setItems(interests)
         }
     }
+
+    private fun validateSelections(): Boolean {
+
+        Log.d("user", user.name)
+
+        if (user?.interest!!.isEmpty()) {
+            Toast.makeText(requireContext(), "Interest must be selected", Toast.LENGTH_SHORT).show()
+            return false;
+        }
+        else if(user.religion == ""){
+            Toast.makeText(requireContext(), "Religion must be selected", Toast.LENGTH_SHORT).show()
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+
 
 }

@@ -2,7 +2,7 @@ package edu.bluejack23_2.verky.ui.viewmodel
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,7 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import edu.bluejack23_2.verky.data.Resource
 import edu.bluejack23_2.verky.data.auth.AuthRepository
-import edu.bluejack23_2.verky.data.model.LoggedUser
+import edu.bluejack23_2.verky.data.model.User
 import edu.bluejack23_2.verky.data.user.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -38,6 +38,17 @@ class AuthViewModel @Inject constructor(
     private val _interestData = MutableLiveData<List<String>>()
     val interestData: LiveData<List<String>> = _interestData
 
+    private val _images = MutableLiveData<MutableList<Uri?>>().apply {
+        value = mutableListOf(null, null, null, null, null, null)
+    }
+    val images: LiveData<MutableList<Uri?>> = _images
+
+    private val _registUser = MutableLiveData<User>()
+    val registUser: LiveData<User> get() = _registUser
+
+    fun setUser(registerUser: User) {
+        _registUser.value = registerUser
+    }
 
     private val sharedPreferences: SharedPreferences by lazy {
         context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
@@ -49,7 +60,6 @@ class AuthViewModel @Inject constructor(
     init{
         if(currentUser != null){
             _loginFlow.value = Resource.Success(authRepository.currentUser!!)
-            Log.e("curreuser", currentUser!!.uid)
             fetchUserLogged(authRepository.currentUser!!.uid)
         }
 //        Log.e("user", authRepository.currentUser!!.uid)
@@ -78,6 +88,22 @@ class AuthViewModel @Inject constructor(
 //        val result = repository.signUp(name, email, password)
 //        _loginFlow.value = result
 //    }
+
+    fun updateUser(updatedUser: User) {
+        val currentUser = _registUser.value ?: User()
+        currentUser.apply {
+            name = updatedUser.name
+            email = updatedUser.email
+            dob = updatedUser.dob
+            gender = updatedUser.gender
+            religion = updatedUser.religion
+            interest = updatedUser.interest
+            incognito_mode = updatedUser.incognito_mode
+            profile_picture = updatedUser.profile_picture
+            gallery_picture = updatedUser.gallery_picture
+        }
+        _registUser.value = currentUser
+    }
 
     fun saveCredentials(email: String, password: String, userId: String) {
         val editor = sharedPreferences.edit()
@@ -123,6 +149,11 @@ class AuthViewModel @Inject constructor(
 
             }
         }
+    }
+
+    fun updateImage(position: Int, uri: Uri) {
+        _images.value?.set(position, uri)
+        _images.value = _images.value
     }
 
     fun logOut(){

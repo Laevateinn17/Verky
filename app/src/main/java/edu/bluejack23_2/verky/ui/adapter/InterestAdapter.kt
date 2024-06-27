@@ -9,9 +9,14 @@ import android.widget.RadioButton
 import androidx.recyclerview.widget.RecyclerView
 import edu.bluejack23_2.verky.R
 
-class InterestAdapter(private var items: List<String>, private val onItemCheckedChange: (List<String>) -> Unit) : RecyclerView.Adapter<InterestAdapter.CheckBoxViewHolder>() {
+class InterestAdapter(private var items: List<String>, private var selectedInterest : List<String>, private val onItemCheckedChange: (List<String>) -> Unit) : RecyclerView.Adapter<InterestAdapter.CheckBoxViewHolder>() {
 
     private var selectedItems = mutableListOf<String>()
+
+    init {
+        selectedItems.addAll(selectedInterest)
+    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckBoxViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_interest, parent, false)
@@ -36,7 +41,6 @@ class InterestAdapter(private var items: List<String>, private val onItemChecked
             checkbox.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     if (!selectedItems.contains(item)) {
-                        Log.e("selected", item)
                         selectedItems.add(item)
                     }
                 } else {
@@ -47,8 +51,14 @@ class InterestAdapter(private var items: List<String>, private val onItemChecked
         }
     }
 
+    fun setSelectedItems(selectedInterest: List<String>){
+        selectedItems.addAll(selectedInterest)
+        notifyDataSetChanged()
+    }
+
     fun setItems(newItems: List<String>) {
         items = newItems
+        selectedItems.addAll(selectedInterest)
         notifyDataSetChanged()
     }
 }

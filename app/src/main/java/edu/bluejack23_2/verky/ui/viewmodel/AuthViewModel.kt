@@ -135,7 +135,7 @@ class AuthViewModel @Inject constructor(
                 val data = userRepository.getInterestData()
                 _interestData.postValue(data)
             } catch (e: Exception) {
-
+                Log.e("verkyerror", e.toString())
             }
         }
     }

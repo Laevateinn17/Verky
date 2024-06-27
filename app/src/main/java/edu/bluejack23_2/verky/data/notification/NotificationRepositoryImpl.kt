@@ -28,7 +28,7 @@ class NotificationRepositoryImpl @Inject constructor(
                 for (dataSnapshot in snapshot.children) {
                     val notification = dataSnapshot.getValue(Notification::class.java)
                     if (notification != null) {
-                        val fromUserId = notification.fromUser?.id
+                        val fromUserId = notification.from
 
                         if (fromUserId != null) {
                             usersRef.child(fromUserId).addListenerForSingleValueEvent(object : ValueEventListener {

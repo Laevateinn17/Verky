@@ -80,6 +80,7 @@ class AuthViewModel @Inject constructor(
 
     fun login(email: String, password : String) = viewModelScope.launch {
         _loginFlow.value = Resource.Loading
+        Log.e("validate login", "login view model")
         val result = authRepository.login(email, password)
         _loginFlow.value = result
     }
@@ -135,7 +136,7 @@ class AuthViewModel @Inject constructor(
                 val data = userRepository.getInterestData()
                 _interestData.postValue(data)
             } catch (e: Exception) {
-
+                Log.e("verkyerror", e.toString())
             }
         }
     }

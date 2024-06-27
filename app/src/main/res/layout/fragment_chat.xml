@@ -29,7 +29,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/settingsButton"
+                android:id="@+id/notificationButton"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 app:layout_constraintRight_toRightOf="parent"

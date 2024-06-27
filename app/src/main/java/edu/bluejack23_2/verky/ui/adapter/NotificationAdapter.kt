@@ -1,10 +1,14 @@
 package edu.bluejack23_2.verky.ui.adapter
 
+import android.text.SpannableString
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.graphics.Typeface
+import android.text.Spannable
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import edu.bluejack23_2.verky.R
@@ -29,7 +33,7 @@ class NotificationAdapter(private var notificationList: List<Notification>) : Re
     inner class NotificationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val notificationImage : ImageView = itemView.findViewById(R.id.item_notification_image)
         private val titleTextView: TextView = itemView.findViewById(R.id.item_notification_name)
-        private val messageTextView: TextView = itemView.findViewById(R.id.item_notification_time)
+        private val timeTextView: TextView = itemView.findViewById(R.id.item_notification_time)
 
         fun bind(notification: Notification) {
             notification.fromUser?.profile_picture?.let { url ->
@@ -38,8 +42,17 @@ class NotificationAdapter(private var notificationList: List<Notification>) : Re
                     .placeholder(R.color.gray_200)
                     .into(notificationImage)
             }
-            titleTextView.text = notification.fromUser!!.name + " want's to connect with you"
-            messageTextView.text = "test"
+            val name = notification.fromUser!!.name
+            val fullText = "$name wants to connect with you."
+
+            val spannableString = SpannableString(fullText)
+
+            val start = fullText.indexOf(name)
+            val end = start + name.length
+
+            spannableString.setSpan(StyleSpan(Typeface.BOLD), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+            titleTextView.text = spannableString
         }
     }
 

@@ -53,7 +53,7 @@
                     android:layout_marginHorizontal="30dp"
                     />
                 <TextView
-
+                    android:id="@+id/public_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:elevation="5dp"
@@ -80,7 +80,7 @@
                     />
 
                 <TextView
-
+                    android:id="@+id/public_birth_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:elevation="5dp"
@@ -107,7 +107,7 @@
                     android:layout_marginHorizontal="30dp"
                     />
                 <TextView
-                    android:id="@+id/nameET"
+                    android:id="@+id/public_gender"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:elevation="5dp"
@@ -132,6 +132,11 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginHorizontal="30dp"
                     />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="wrap_content"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_height="wrap_content"/>
 
             </LinearLayout>
         </LinearLayout>

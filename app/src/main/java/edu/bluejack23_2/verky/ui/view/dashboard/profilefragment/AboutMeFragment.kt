@@ -23,7 +23,6 @@ class AboutMeFragment : Fragment() {
     private var _binding: FragmentAboutMeBinding? = null
     private val binding get() = _binding!!
     private lateinit var interestAdapter: InterestAdapter
-    private val authViewModel : AuthViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

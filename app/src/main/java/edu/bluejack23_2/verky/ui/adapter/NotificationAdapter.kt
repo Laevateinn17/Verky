@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import edu.bluejack23_2.verky.R
 import edu.bluejack23_2.verky.data.model.Notification
-import edu.bluejack23_2.verky.ui.view.dashboard.PublicProfileActivity
+import edu.bluejack23_2.verky.ui.view.dashboard.publicprofilefragment.PublicProfileActivity
 
 class NotificationAdapter(private var notificationList: List<Notification>) : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
 

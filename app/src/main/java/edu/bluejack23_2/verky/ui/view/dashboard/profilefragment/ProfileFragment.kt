@@ -31,7 +31,6 @@ class ProfileFragment : Fragment() {
     }
 
     private val viewModel: ProfileViewModel by viewModels()
-    private val authViewModel : AuthViewModel by viewModels()
 
     private fun init(){
         myphotoFragment = MyPhotoFragment()

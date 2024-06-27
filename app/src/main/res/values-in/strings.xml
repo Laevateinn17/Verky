@@ -33,4 +33,6 @@
     <string name="blocked_accounts_label">Akun yang diblokir</string>
     <string name="application_settings_label">Pengaturan aplikasi</string>
     <string name="dark_mode_label">Mode gelap</string>
+    <string name="my_height_label">Tinggi(cm)</string>
+    <string name="my_height_hint">Masukkan tinggi anda</string>
 </resources>

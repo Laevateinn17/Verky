@@ -43,6 +43,6 @@
     <string name="application_settings_label">Application settings</string>
     <string name="dark_mode_label">Dark mode</string>
     <string name="register" translatable="false">Register</string>
-
-
+    <string name="my_height_label">Height(cm)</string>
+    <string name="my_height_hint">Input your height</string>
 </resources>

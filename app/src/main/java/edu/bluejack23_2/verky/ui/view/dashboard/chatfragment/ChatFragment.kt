@@ -1,5 +1,6 @@
 package edu.bluejack23_2.verky.ui.view.dashboard.chatfragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,6 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack23_2.verky.databinding.FragmentChatBinding
 import edu.bluejack23_2.verky.ui.adapter.ChatAdapter
+import edu.bluejack23_2.verky.ui.view.auth.LoginActivity
+import edu.bluejack23_2.verky.ui.view.dashboard.DashboardActivity
+import edu.bluejack23_2.verky.ui.view.dashboard.profilefragment.SettingsActivity
 import edu.bluejack23_2.verky.ui.viewmodel.ChatViewModel
 
 @AndroidEntryPoint
@@ -40,7 +44,9 @@ class ChatFragment : Fragment() {
             adapter = chatAdapter
         }
 
-//        chatViewModel.
+        binding.notificationButton.setOnClickListener {
+            startActivity(Intent(requireContext(), NotificationActivity::class.java))
+        }
 
         chatViewModel.chatList.observe(viewLifecycleOwner, Observer { chats ->
             Log.d("ChatFragment", "Chats: $chats")

@@ -25,6 +25,7 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun login(email: String, password: String): Resource<FirebaseUser> {
         return try{
             val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
+            Log.e("user", result.toString())
             userRepository.setLoggedUser(result.user!!.uid)
             Resource.Success(result.user!!)
         }catch (e: Exception){

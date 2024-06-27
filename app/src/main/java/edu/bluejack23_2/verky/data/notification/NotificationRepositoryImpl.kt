@@ -23,11 +23,12 @@ class NotificationRepositoryImpl @Inject constructor(
     override fun getNotificationList(userID: String, callback: (List<Notification>) -> Unit) {
         val notifications = mutableListOf<Notification>()
 
-        notificationRef.addListenerForSingleValueEvent(object : ValueEventListener {
+        notificationRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                notifications.clear()
                 for (dataSnapshot in snapshot.children) {
                     val notification = dataSnapshot.getValue(Notification::class.java)
-                    if (notification != null) {
+                    if (notification != null && notification.to == userID) {
                         val fromUserId = notification.from
 
                         if (fromUserId != null) {
@@ -40,22 +41,16 @@ class NotificationRepositoryImpl @Inject constructor(
                                 }
 
                                 override fun onCancelled(error: DatabaseError) {
-
+                                    // Handle possible errors
                                 }
                             })
                         }
-
-                        // Fetch toUser data if needed
-                        // Example code similar to fetching fromUser
-                        // if (toUserId != null) {
-                        //     ...
-                        // }
                     }
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Handle possible errors.
+                // Handle possible errors
             }
         })
     }

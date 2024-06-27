@@ -6,6 +6,7 @@ data class Notification(
     val to : String = "",
     val toUser : User? = null,
     var fromUser: User? = null,
+    val timeStamp : Long? = null
 ) {
-    constructor() : this("", "", "", null, null)
+    constructor() : this("", "", "", null, null, null)
 }

@@ -2,7 +2,10 @@ package edu.bluejack23_2.verky.ui.viewmodel
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.net.Uri
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
@@ -10,7 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import edu.bluejack23_2.verky.data.Resource
 import edu.bluejack23_2.verky.data.auth.AuthRepository
-import edu.bluejack23_2.verky.data.model.LoggedUser
+import edu.bluejack23_2.verky.data.model.User
 import edu.bluejack23_2.verky.data.user.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,8 +30,26 @@ class AuthViewModel @Inject constructor(
     private val _loginFlow = MutableStateFlow<Resource<FirebaseUser>?>(null)
     val loginFlow: StateFlow<Resource<FirebaseUser>?> = _loginFlow
 
-//    private val _signUpFlow = MutableStateFlow<Resource<FirebaseUser>?>(null)
-//    val signUpFlow: StateFlow<Resource<FirebaseUser>?> = _signUpFlow
+    private val _signUpFlow = MutableStateFlow<Resource<FirebaseUser>?>(null)
+    val signUpFlow: StateFlow<Resource<FirebaseUser>?> = _signUpFlow
+
+    private val _religionData = MutableLiveData<List<String>>()
+    val religionData: LiveData<List<String>> = _religionData
+
+    private val _interestData = MutableLiveData<List<String>>()
+    val interestData: LiveData<List<String>> = _interestData
+
+    private val _images = MutableLiveData<MutableList<Uri?>>().apply {
+        value = mutableListOf(null, null, null, null, null, null)
+    }
+    val images: LiveData<MutableList<Uri?>> = _images
+
+    private val _registUser = MutableLiveData<User>()
+    val registUser: LiveData<User> get() = _registUser
+
+    fun setUser(registerUser: User) {
+        _registUser.value = registerUser
+    }
 
     private val sharedPreferences: SharedPreferences by lazy {
         context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
@@ -40,7 +61,6 @@ class AuthViewModel @Inject constructor(
     init{
         if(currentUser != null){
             _loginFlow.value = Resource.Success(authRepository.currentUser!!)
-            Log.e("curreuser", currentUser!!.uid)
             fetchUserLogged(authRepository.currentUser!!.uid)
         }
 //        Log.e("user", authRepository.currentUser!!.uid)
@@ -64,11 +84,15 @@ class AuthViewModel @Inject constructor(
         _loginFlow.value = result
     }
 
-//    fun signUp(name : String, email: String, password : String) = viewModelScope.launch {
-//        _loginFlow.value = Resource.Loading
-//        val result = repository.signUp(name, email, password)
-//        _loginFlow.value = result
-//    }
+    fun signUp(name : String, email: String, password : String) = viewModelScope.launch {
+        _signUpFlow.value = Resource.Loading
+        val result = authRepository.signUp(name, email, password)
+        _signUpFlow.value = result
+    }
+
+    suspend fun isEmailAlreadyUsed(email: String): Boolean {
+        return userRepository.isEmailAlreadyUsed(email)
+    }
 
     fun saveCredentials(email: String, password: String, userId: String) {
         val editor = sharedPreferences.edit()
@@ -94,17 +118,49 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    private fun clearCredentialsFromPreferences() {
-        val editor = sharedPreferences.edit()
-        editor.remove("email")
-        editor.remove("password")
-        editor.apply()
+    fun fetchReligionData() {
+        viewModelScope.launch {
+            try {
+                val data = userRepository.getReligionData()
+                _religionData.postValue(data)
+            } catch (e: Exception) {
+
+            }
+        }
+    }
+
+    fun fetchInterestData() {
+        viewModelScope.launch {
+            try {
+                val data = userRepository.getInterestData()
+                _interestData.postValue(data)
+            } catch (e: Exception) {
+
+            }
+        }
+    }
+
+    fun updateImage(position: Int, uri: Uri) {
+        _images.value?.set(position, uri)
+        _images.value = _images.value
     }
 
     fun logOut(){
         authRepository.logOut();
         _loginFlow.value = null
-//        _signUpFlow.value = null
+        _signUpFlow.value = null
+    }
+
+    fun uploadImages(
+        images: List<Uri>,
+        onSuccess: (List<String>) -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+        authRepository.uploadImagesToFirebase(images, onSuccess, onFailure)
+    }
+
+    suspend fun addUser(user: User, onSuccess: () -> Unit, onFailure: (String) -> Unit) {
+        currentUser?.let { userRepository.addUser(user, it.uid,  onSuccess, onFailure) }
     }
 
 }

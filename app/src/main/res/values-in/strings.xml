@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Verky</string>
+    <string name="login_page_welcome_message">Selamat Datang!</string>
+    <string name="register_page_start_message">Mari kita mulai dengan memperkenalkan diri Anda</string>
+    <string name="register_message">Tidak punya akun?</string>
+    <string name="register_link">Register disini</string>
+    <string name="name_input_label">Nama kamu</string>
+    <string name="full_name_input_hint">Masukkan nama lengkapmu</string>
+    <string name="birth_input_label">Tanggal lahirmu</string>
+    <string name="day_input_label">Hari</string>
+    <string name="month_input_label">Bulan</string>
+    <string name="year_input_label">Tahun</string>
+    <string name="gender_input_label">Jenis kelamin manakah yang menggambarkan Anda?</string>
+    <string name="gender_input_male">Laki - laki</string>
+    <string name="gender_input_female">Perempuan</string>
+    <string name="email_input_label">Email kamu</string>
+    <string name="password_input_label">Password kamu</string>
+    <string name="religion_label">Apa agamamu?</string>
+    <string name="my_information_label">Informasi saya</string>
+    <string name="full_name_input_label">Nama lengkap</string>
+    <string name="birth_date_input_label">Tanggal Lahir</string>
+    <string name="gender_input_label2">Jenis kelamin</string>
+    <string name="my_interest_label">Minat saya</string>
+    <string name="register_my_interest_label">Bagikan beberapa hal yang menurut Anda keren</string>
+    <string name="add_pic_label">Tambahkan foto agar kami dapat melihat siapa Anda</string>
+    <string name="settings_label">Pengaturan</string>
+    <string name="sign_out_button">Keluar</string>
+    <string name="notification_label">Pemberitahuan</string>
+    <string name="privacy_label">Keamanan</string>
+    <string name="receive_notification_label">Terima pemberitahuan</string>
+    <string name="incognito_mode_label">Mode penyamaran</string>
+    <string name="blocked_accounts_label">Akun yang diblokir</string>
+    <string name="application_settings_label">Pengaturan aplikasi</string>
+    <string name="dark_mode_label">Mode gelap</string>
+</resources>

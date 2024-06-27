@@ -13,6 +13,6 @@
         android:button="@null"
         android:background="@drawable/religion_radio_button"
         android:paddingVertical="5dp"
-        android:paddingHorizontal="10dp"
+        android:paddingHorizontal="12dp"
         />
 </LinearLayout>

@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.view.auth.LoginActivity"
-        android:background="@color/white_background"
+        android:background="?attr/primaryBackgroundColor"
 
         >
         <ImageView
@@ -26,7 +26,6 @@
             android:layout_height="wrap_content"
             android:text="@string/login_page_welcome_message"
             android:textSize="36sp"
-            android:textColor="@color/black"
             android:fontFamily="@font/urbanist_bold"
             app:layout_constraintTop_toBottomOf="@id/logo"
             app:layout_constraintStart_toStartOf="parent"
@@ -83,20 +82,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <Button
+        <ImageView
             android:id="@+id/biometric_login"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/custom_button"
-            android:drawableLeft="@drawable/biometrics"
+            android:src="@drawable/fingerprint"
+            android:scaleType="center"
             android:text=""
             android:contentDescription="@string/biometric_login"
             android:textColor="@color/white"
             android:textSize="14sp"
             android:layout_marginEnd="8dp"
             android:fontFamily="@font/urbanist_bold"
-            android:gravity="center"
-            android:padding="12dp" />
+            />
 
         <Button
             android:id="@+id/loginButton"
@@ -130,7 +129,6 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/urbanist_medium"
             android:text="@string/register_message"
-            android:textColor="@color/black"
             android:textSize="16sp" />
 
         <TextView

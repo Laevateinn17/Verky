@@ -11,6 +11,6 @@
         android:button="@null"
         android:background="@drawable/interest_checkbox"
         android:paddingVertical="5dp"
-        android:paddingHorizontal="10dp"
+        android:paddingHorizontal="12dp"
         />
 </LinearLayout>

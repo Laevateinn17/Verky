@@ -26,7 +26,6 @@
                 android:text="@string/my_information_label"
                 android:textSize="36sp"
                 android:fontFamily="@font/urbanist_bold"
-                android:textColor="@color/black"
                 />
 
             <LinearLayout

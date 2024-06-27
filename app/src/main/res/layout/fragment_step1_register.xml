@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.view.auth.Step1RegisterFragment"
-    android:background="@color/white_background">
+    android:background="?attr/primaryBackgroundColor">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -32,7 +32,6 @@
                 android:text="@string/register_page_start_message"
                 android:textSize="36sp"
                 android:fontFamily="@font/urbanist_bold"
-                android:textColor="@color/black"
                 />
 
             <LinearLayout

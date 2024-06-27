@@ -23,7 +23,7 @@ class MyPhotoAdapter(private val photoList : List<String>) : RecyclerView.Adapte
         val imageUrl = photoList[position]
         Glide.with(holder.itemView.context)
             .load(imageUrl)
-            .placeholder(R.color.gray)
+            .placeholder(R.color.gray_200)
             .into(holder.imageView)
     }
 

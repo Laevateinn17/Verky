@@ -33,12 +33,12 @@ class ChatAdapter : ListAdapter<Chat, ChatAdapter.ChatViewHolder>(ChatDiffCallba
         holder.nameTextView.text = chat.partnerUser?.name ?: "Unknown"
         Glide.with(holder.itemView.context)
             .load(chat.partnerUser?.profile_picture)
-            .placeholder(R.color.gray)
+            .placeholder(R.color.gray_200)
             .into(holder.imageChat)
         val statusTrueCount = chat.countMessagesWithStatusTrue()
 
         holder.newMessageTextView.text = if (statusTrueCount == 0) "No new message" else "$statusTrueCount new message!"
-        val gray = ContextCompat.getColor(holder.itemView.context, R.color.gray)
+        val gray = ContextCompat.getColor(holder.itemView.context, R.color.gray_200)
         val primary = ContextCompat.getColor(holder.itemView.context, R.color.primary)
         holder.newMessageTextView.setTextColor(if (statusTrueCount == 0) gray else primary)
 

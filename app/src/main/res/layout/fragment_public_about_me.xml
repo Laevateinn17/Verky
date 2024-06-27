@@ -120,6 +120,33 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:orientation="vertical"
+                android:layout_marginVertical="10dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_height_label"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/urbanist_bold"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginHorizontal="30dp"
+                    />
+                <TextView
+                    android:id="@+id/public_height"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="5dp"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginBottom="14dp"
+                    android:textSize="16sp"
+                    android:text="Height here"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginVertical="10dp"
                 >

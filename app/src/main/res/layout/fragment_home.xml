@@ -37,7 +37,7 @@
             app:layout_constraintBottom_toTopOf="@id/buttons_layout"
             app:layout_constraintLeft_toLeftOf="parent"
             android:text="Name, age"
-            android:textSize="32sp"
+            android:textSize="40sp"
             android:layout_marginLeft="30dp"
             android:textColor="@color/white"
             android:layout_marginBottom="5dp"
@@ -55,16 +55,16 @@
             >
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_marginEnd="18dp"
                 android:background="@drawable/reject_button"
                 android:scaleType="centerInside"
                 android:src="@drawable/baseline_close_24" />
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:background="@drawable/accept_button"
                 android:scaleType="centerInside"
                 android:src="@drawable/baseline_check_24" />

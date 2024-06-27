@@ -6,21 +6,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack23_2.verky.data.model.User
 import edu.bluejack23_2.verky.databinding.FragmentAboutMeBinding
+import edu.bluejack23_2.verky.ui.adapter.InterestAdapter
+import edu.bluejack23_2.verky.ui.adapter.MyPhotoAdapter
+import edu.bluejack23_2.verky.ui.viewmodel.AuthViewModel
 import java.util.Calendar
 import java.util.Date
 
+@AndroidEntryPoint
 class AboutMeFragment : Fragment() {
 
     private var _binding: FragmentAboutMeBinding? = null
     private val binding get() = _binding!!
+    private lateinit var interestAdapter: InterestAdapter
+    private val authViewModel : AuthViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAboutMeBinding.inflate(layoutInflater, container, false)
+
         return binding.root
     }
 
@@ -31,6 +41,11 @@ class AboutMeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.interestRecyclerView.layoutManager = LinearLayoutManager(context)
+        interestAdapter = InterestAdapter(listOf(), listOf(), {})
+        binding.interestRecyclerView.adapter = interestAdapter
+
     }
 
     fun setContent(user: User?) {
@@ -56,6 +71,9 @@ class AboutMeFragment : Fragment() {
             } else if(it.gender == "Female") {
                 binding.FemaleRB.isChecked = true
             }
+
+            interestAdapter.setItems(user!!.interest)
         }
     }
+
 }

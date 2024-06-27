@@ -12,10 +12,13 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
+import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack23_2.verky.R
 import edu.bluejack23_2.verky.databinding.FragmentProfileBinding
+import edu.bluejack23_2.verky.ui.viewmodel.AuthViewModel
 import edu.bluejack23_2.verky.ui.viewmodel.ProfileViewModel
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
     private lateinit var binding : FragmentProfileBinding
@@ -27,6 +30,7 @@ class ProfileFragment : Fragment() {
     }
 
     private val viewModel: ProfileViewModel by viewModels()
+    private val authViewModel : AuthViewModel by viewModels()
 
     private fun init(){
         myphotoFragment = MyPhotoFragment()
@@ -63,7 +67,6 @@ class ProfileFragment : Fragment() {
                 .load(profile.profile_picture)
                 .placeholder(R.color.gray)
                 .into(profileImageView)
-
 
             if (aboutMeFragment.isAdded && aboutMeFragment.view != null) {
                 aboutMeFragment.setContent(profile)

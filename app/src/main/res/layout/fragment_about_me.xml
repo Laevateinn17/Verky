@@ -245,6 +245,11 @@
                         android:layout_marginHorizontal="30dp"
                         />
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/interestRecyclerView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
                 </LinearLayout>
             </LinearLayout>
             <Button

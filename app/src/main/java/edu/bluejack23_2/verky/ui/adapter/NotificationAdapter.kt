@@ -63,6 +63,7 @@ class NotificationAdapter(private var notificationList: List<Notification>) : Re
                 timeTextView.text = getTimeAgo(it)
             }
 
+
             notificationImage.setOnClickListener{
                 val context = itemView.context
                 val intent = Intent(context, PublicProfileActivity::class.java).apply {
@@ -83,9 +84,9 @@ class NotificationAdapter(private var notificationList: List<Notification>) : Re
         val days = hours / 24
 
         return when {
-            days > 0 -> "$days days ago"
-            hours > 0 -> "$hours hours ago"
-            minutes > 0 -> "$minutes minutes ago"
+            days > 0 -> "${days}d"
+            hours > 0 -> "${hours}h"
+            minutes > 0 -> "${minutes}m"
             else -> "just now"
         }
     }

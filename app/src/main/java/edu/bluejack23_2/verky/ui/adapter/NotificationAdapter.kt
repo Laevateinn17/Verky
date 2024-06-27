@@ -18,8 +18,13 @@ import com.bumptech.glide.Glide
 import edu.bluejack23_2.verky.R
 import edu.bluejack23_2.verky.data.model.Notification
 import edu.bluejack23_2.verky.ui.view.dashboard.publicprofilefragment.PublicProfileActivity
+import edu.bluejack23_2.verky.ui.viewmodel.NotificationViewModel
 
-class NotificationAdapter(private var notificationList: List<Notification>) : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
+class NotificationAdapter(
+    private var notificationList: List<Notification>,
+    private var notificationViewModel: NotificationViewModel
+)
+    : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_notification, parent, false)
@@ -39,6 +44,8 @@ class NotificationAdapter(private var notificationList: List<Notification>) : Re
         private val notificationImage : ImageView = itemView.findViewById(R.id.item_notification_image)
         private val titleTextView: TextView = itemView.findViewById(R.id.item_notification_name)
         private val timeTextView: TextView = itemView.findViewById(R.id.item_notification_time)
+        private val acceptButton : ImageView = itemView.findViewById(R.id.acceptButton)
+        private val rejectButton : ImageView = itemView.findViewById(R.id.rejectButton)
 
         fun bind(notification: Notification) {
             notification.fromUser?.profile_picture?.let { url ->
@@ -63,7 +70,6 @@ class NotificationAdapter(private var notificationList: List<Notification>) : Re
                 timeTextView.text = getTimeAgo(it)
             }
 
-
             notificationImage.setOnClickListener{
                 val context = itemView.context
                 val intent = Intent(context, PublicProfileActivity::class.java).apply {
@@ -71,6 +77,15 @@ class NotificationAdapter(private var notificationList: List<Notification>) : Re
                 }
                 context.startActivity(intent)
             }
+
+            acceptButton.setOnClickListener{
+                notificationViewModel.acceptNotification(notification)
+            }
+
+            rejectButton.setOnClickListener{
+                notificationViewModel.rejectNotification(notification)
+            }
+
         }
     }
 

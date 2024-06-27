@@ -23,8 +23,9 @@ class ChatRepositoryImpl @Inject constructor(
 
     override fun getChatList(userID: String, callback: (List<Chat>) -> Unit) {
         val tasks = mutableListOf<Task<Chat?>>()
-        chatsRef.addListenerForSingleValueEvent(object : ValueEventListener {
+        chatsRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                tasks.clear()
                 for (chatSnapshot in snapshot.children) {
                     val userListSnapshot = chatSnapshot.child("user_list")
                     val userList =
@@ -45,7 +46,6 @@ class ChatRepositoryImpl @Inject constructor(
                                 }
 
                                 if (partnerUser != null) {
-                                    Log.e("message", "message testing")
                                     Chat(chatId, partnerUser, messages)
                                 } else {
                                     null

@@ -30,4 +30,12 @@ class NotificationViewModel @Inject constructor(
         }
     }
 
+    fun acceptNotification(notif : Notification){
+        notificationRepository.acceptNotification(notif)
+    }
+
+    fun rejectNotification(notif : Notification){
+        notificationRepository.rejectNotification(notif)
+    }
+
 }

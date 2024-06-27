@@ -42,7 +42,7 @@ class NotificationActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        notificationAdapter = NotificationAdapter(listOf())
+        notificationAdapter = NotificationAdapter(listOf(), notificationViewModel = viewModel)
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(this@NotificationActivity)
             adapter = notificationAdapter

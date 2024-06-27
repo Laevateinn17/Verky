@@ -9,9 +9,11 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import edu.bluejack23_2.verky.data.model.Chat
+import edu.bluejack23_2.verky.data.model.ChatInsert
 import edu.bluejack23_2.verky.data.model.Message
 import edu.bluejack23_2.verky.data.model.Notification
 import edu.bluejack23_2.verky.data.model.User
+import java.util.UUID
 import javax.inject.Inject
 
 class NotificationRepositoryImpl @Inject constructor(
@@ -29,6 +31,7 @@ class NotificationRepositoryImpl @Inject constructor(
                 for (dataSnapshot in snapshot.children) {
                     val notification = dataSnapshot.getValue(Notification::class.java)
                     if (notification != null && notification.to == userID) {
+                        notification.notificationID = dataSnapshot.key ?: ""
                         val fromUserId = notification.from
 
                         if (fromUserId != null) {
@@ -53,5 +56,38 @@ class NotificationRepositoryImpl @Inject constructor(
                 // Handle possible errors
             }
         })
+    }
+
+    override fun acceptNotification(notif: Notification) {
+
+        val userList = listOf(notif.from, notif.to)
+
+        val chat = ChatInsert(
+            chatId = UUID.randomUUID().toString(),
+            messages = emptyList(),
+            user_list = userList
+        )
+
+        val chatRef = firebaseDatabase.getReference("chats")
+        chatRef.child(chat.chatId).setValue(chat)
+            .addOnSuccessListener {
+                Log.d("NotificationRepository", "Chat successfully created")
+            }
+            .addOnFailureListener { e ->
+                Log.e("NotificationRepository", "Error creating chat", e)
+            }
+
+        rejectNotification(notif)
+    }
+
+    override fun rejectNotification(notif: Notification) {
+        val notificationId = notif.notificationID
+        notificationRef.child(notificationId).removeValue()
+            .addOnSuccessListener {
+                Log.d("NotificationRepository", "Notification successfully removed")
+            }
+            .addOnFailureListener { e ->
+                Log.e("NotificationRepository", "Error removing notification", e)
+            }
     }
 }

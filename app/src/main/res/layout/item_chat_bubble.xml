@@ -2,26 +2,32 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
+    android:paddingHorizontal="10dp"
+    android:paddingVertical="5dp"
     >
 
     <LinearLayout
+        android:id="@+id/receiver_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="100dp"
         android:gravity="bottom"
+
         >
         <TextView
             android:id="@+id/receiver_chat_item"
             android:text="Message"
             android:background="@drawable/chat_bubble_item"
-            android:backgroundTint="@color/gray_100"
-            android:padding="8dp"
-            android:textSize="18sp"
+            android:backgroundTint="?attr/containerColor"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="12dp"
+            android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             />
         <TextView
+            android:id="@+id/receiver_time_stamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
@@ -33,13 +39,14 @@
             />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/sender_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_marginStart="80dp"
-
+        android:layout_alignParentEnd="true"
         >
         <TextView
+            android:id="@+id/sender_time_stamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
@@ -54,10 +61,13 @@
             android:textColor="@color/white"
             android:background="@drawable/chat_bubble_item"
             android:backgroundTint="@color/primary"
-            android:padding="8dp"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="12dp"
             android:layout_width="wrap_content"
-            android:textSize="18sp"
-            android:layout_height="wrap_content"/>
+            android:textSize="16sp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            />
     </LinearLayout>
 
 

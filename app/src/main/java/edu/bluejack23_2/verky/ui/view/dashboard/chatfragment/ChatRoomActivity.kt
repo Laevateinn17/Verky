@@ -49,11 +49,14 @@ class ChatRoomActivity : AppCompatActivity() {
             adapter = messageAdapter
         }
 
+        binding.backButton.setOnClickListener {
+            onBackPressed();
+        }
+
         chatId?.let {
             viewModel.fetchMessage(it).observe(this, Observer { messages ->
-                Log.e("message", messages.size.toString())
-                messages.sortedBy { it.timestamp }
-                messageAdapter.submitList(messages)
+                val sortedMessages = messages.sortedBy { it.timestamp }
+                messageAdapter.submitList(sortedMessages)
                 binding.chatRecyclerView.scrollToPosition(messages.size - 1)
             })
         }

@@ -33,7 +33,7 @@ class NotificationActivity : AppCompatActivity() {
         binding = ActivityNotificationBinding.inflate(layoutInflater)
 
         binding.backButton.setOnClickListener {
-            startActivity(Intent(this, DashboardActivity::class.java))
+            onBackPressed();
         }
 
         setContentView(binding.root)

@@ -26,7 +26,9 @@ class ChatRepositoryImpl @Inject constructor(
 
     override fun fetchMessage(chatId: String): LiveData<List<Message>> {
         val messagesLiveData = MutableLiveData<List<Message>>()
-        chatsRef.child(chatId).child("message").addValueEventListener(object : ValueEventListener {
+        val query = chatsRef.child(chatId).child("message").orderByChild("timestamp")
+
+        query.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val messageList = mutableListOf<Message>()
                 for (data in snapshot.children) {

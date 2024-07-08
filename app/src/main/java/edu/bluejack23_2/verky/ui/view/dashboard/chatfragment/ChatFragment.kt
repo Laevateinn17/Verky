@@ -11,11 +11,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import edu.bluejack23_2.verky.data.model.Chat
 import edu.bluejack23_2.verky.databinding.FragmentChatBinding
 import edu.bluejack23_2.verky.ui.adapter.ChatAdapter
-import edu.bluejack23_2.verky.ui.view.auth.LoginActivity
-import edu.bluejack23_2.verky.ui.view.dashboard.DashboardActivity
-import edu.bluejack23_2.verky.ui.view.dashboard.profilefragment.SettingsActivity
 import edu.bluejack23_2.verky.ui.viewmodel.ChatViewModel
 
 @AndroidEntryPoint
@@ -37,7 +35,9 @@ class ChatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        chatAdapter = ChatAdapter()
+        chatAdapter = ChatAdapter{
+            chat -> navigateToChatDetail(chat)
+        }
 
         binding.chatRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -49,11 +49,19 @@ class ChatFragment : Fragment() {
         }
 
         chatViewModel.chatList.observe(viewLifecycleOwner, Observer { chats ->
-            Log.d("ChatFragment", "Chats: $chats")
             chatAdapter.submitList(chats)
             binding.chatRecyclerView.scrollToPosition(chats.size - 1)
         })
 
+    }
+
+    private fun navigateToChatDetail(chat: Chat) {
+        Log.d("here", "clicked")
+        val intent = Intent(requireContext(), ChatRoomActivity::class.java).apply {
+            putExtra("CHAT_ID", chat.chatId)
+            putExtra("USER_ID", chat.partnerUser?.id)
+        }
+        startActivity(intent)
     }
 
     override fun onDestroyView() {

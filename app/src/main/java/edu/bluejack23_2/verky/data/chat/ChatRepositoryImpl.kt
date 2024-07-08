@@ -1,9 +1,12 @@
 package edu.bluejack23_2.verky.data.chat
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.database.*
+import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack23_2.verky.data.model.Chat
 import edu.bluejack23_2.verky.data.model.Message
 import edu.bluejack23_2.verky.data.model.User
@@ -16,9 +19,48 @@ class ChatRepositoryImpl @Inject constructor(
     private val chatsRef: DatabaseReference by lazy { firebaseDatabase.getReference("chats") }
     private val usersRef: DatabaseReference by lazy { firebaseDatabase.getReference("users") }
 
-    override fun sendMessage(message: Message, chat: Chat) {
-        val messageRef = chatsRef.child(chat.chatId).child("messages").push()
+    override fun sendMessage(message: Message, chatId : String) {
+        val messageRef = chatsRef.child(chatId).child("message").push()
         messageRef.setValue(message)
+    }
+
+    override fun fetchMessage(chatId: String): LiveData<List<Message>> {
+        val messagesLiveData = MutableLiveData<List<Message>>()
+        chatsRef.child(chatId).child("message").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val messageList = mutableListOf<Message>()
+                for (data in snapshot.children) {
+                    val message = data.getValue(Message::class.java)
+                    if (message != null) {
+                        fetchUserForMessage(message) { user ->
+                            message.user = user
+                            messageList.add(message)
+                            messagesLiveData.value = messageList
+                        }
+//                        messageList.add(message)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle possible errors.
+            }
+        })
+        return messagesLiveData
+    }
+
+    private fun fetchUserForMessage(message: Message, callback: (User?) -> Unit) {
+        val userId = message.userID
+        usersRef.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user = snapshot.getValue(User::class.java)
+                callback(user)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                callback(null)
+            }
+        })
     }
 
     override fun getChatList(userID: String, callback: (List<Chat>) -> Unit) {
@@ -46,6 +88,7 @@ class ChatRepositoryImpl @Inject constructor(
                                 }
 
                                 if (partnerUser != null) {
+                                    partnerUser.id = partnerUserId
                                     Chat(chatId, partnerUser, messages)
                                 } else {
                                     null

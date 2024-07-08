@@ -93,6 +93,25 @@ class UserRepositoryImpl @Inject constructor(
         return snapshot.exists()
     }
 
+    override suspend fun getUser(userID: String): User {
+        return suspendCancellableCoroutine { continuation ->
+            userRef.child(userID).addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val user = snapshot.getValue(User::class.java)
+                    if (user != null) {
+                        continuation.resume(user)
+                    } else {
+                        continuation.resumeWithException(Exception("User not found"))
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    continuation.resumeWithException(error.toException())
+                }
+            })
+        }
+    }
+
     override suspend fun addUser(user: User, userID : String, onSuccess: () -> Unit, onFailure: (String) -> Unit) {
         if (userID != null) {
             userRef.child(userID).setValue(user)

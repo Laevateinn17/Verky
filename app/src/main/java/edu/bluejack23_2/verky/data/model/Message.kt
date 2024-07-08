@@ -4,8 +4,9 @@ data class Message(
     val messageId: String = "",
     val content: String = "",
     val status: Boolean = false,
-    val timestamp: String = "",
-    val userID: String = ""
+    val timestamp: Long? = null,
+    val userID: String = "",
+    var user: User?
 ) {
-    constructor() : this("", "", false, "", "")
+    constructor() : this("", "", false, null, "", null)
 }

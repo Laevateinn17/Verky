@@ -15,12 +15,20 @@ import com.bumptech.glide.Glide
 import edu.bluejack23_2.verky.R
 import edu.bluejack23_2.verky.data.model.Chat
 
-class ChatAdapter : ListAdapter<Chat, ChatAdapter.ChatViewHolder>(ChatDiffCallback()) {
+class ChatAdapter(private val onItemClicked: (Chat) -> Unit) : ListAdapter<Chat, ChatAdapter.ChatViewHolder>(ChatDiffCallback()) {
 
     inner class ChatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nameTextView : TextView = itemView.findViewById(R.id.chat_item_name)
         val imageChat : ImageView = itemView.findViewById(R.id.chat_item_image)
         val newMessageTextView : TextView = itemView.findViewById(R.id.chat_item_newmessage)
+        init {
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onItemClicked(getItem(position))
+                }
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {

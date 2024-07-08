@@ -12,6 +12,7 @@ interface UserRepository {
 
     suspend fun isEmailAlreadyUsed(email: String): Boolean
 
+    suspend fun getUser(userID : String) : User
 
     suspend fun addUser(user: User, userID : String, onSuccess: () -> Unit, onFailure: (String) -> Unit)
 }

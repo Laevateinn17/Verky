@@ -10,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.bluejack23_2.verky.data.chat.ChatRepository
 import edu.bluejack23_2.verky.data.model.Chat
 import edu.bluejack23_2.verky.data.model.LoggedUser
+import edu.bluejack23_2.verky.data.model.Message
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,9 +28,17 @@ class ChatViewModel @Inject constructor(
         LoggedUser.getInstance().getUser()?.id?.let { fetchChatList(it) }
     }
 
-    private fun fetchChatList(userID: String) {
+    private fun fetchChatList(userID: String){
         chatRepository.getChatList(userID) { chats ->
             _chatList.postValue(chats)
         }
+    }
+
+    fun fetchMessage(chatID : String)  : LiveData<List<Message>>{
+        return chatRepository.fetchMessage(chatID)
+    }
+
+    fun sendMessage(chatID : String, message: Message){
+        chatRepository.sendMessage(message, chatID)
     }
 }

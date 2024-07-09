@@ -88,7 +88,6 @@ class ChatRoomActivity : AppCompatActivity() {
                         user = null
                     )
                 }
-
             if (message != null) {
                 viewModel.sendMessage(chatId, message)
             }

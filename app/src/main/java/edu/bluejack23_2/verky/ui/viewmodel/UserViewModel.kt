@@ -11,6 +11,10 @@ class UserViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : ViewModel() {
 
+    suspend fun getPotentialMatch() : User {
+        return userRepository.getPotentialMatch()
+    }
+
     suspend fun fetchUser(userID: String) : User {
         return userRepository.getUser(userID)
     }

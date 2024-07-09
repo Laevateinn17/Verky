@@ -22,6 +22,7 @@ class UserRepositoryImpl @Inject constructor(
     private val userRef: DatabaseReference by lazy {firebaseDatabase.getReference("users")}
     private val religionRef: DatabaseReference by lazy { firebaseDatabase.getReference("religion") }
     private val interestRef: DatabaseReference by lazy { firebaseDatabase.getReference("interest") }
+    private val rejectedUsersRef: DatabaseReference by lazy { firebaseDatabase.getReference("rejectedUsers")}
 
     override suspend fun setLoggedUser(userId: String) {
         val userData = userRef.child(userId);
@@ -110,6 +111,43 @@ class UserRepositoryImpl @Inject constructor(
                 }
             })
         }
+    }
+
+    override suspend fun  getPotentialMatch() : User {
+        val currentUserId = LoggedUser.getInstance().getUser()?.id ?: throw Exception("User not logged in")
+        val rejectedUsers = getRejectedUsers(currentUserId)
+
+        return suspendCancellableCoroutine { continuation ->
+            userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (childSnapshot in snapshot.children) {
+                        val potentialMatch = childSnapshot.getValue(User::class.java)
+                        if (potentialMatch != null && potentialMatch.id !in rejectedUsers) {
+                            continuation.resume(potentialMatch)
+                            return
+                        }
+                    }
+                    continuation.resumeWithException(Exception("No potential match"))
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    continuation.resumeWithException(error.toException())
+                }
+            })
+        }
+    }
+
+    private suspend fun getRejectedUsers(currentUserId: String): List<String> = suspendCancellableCoroutine { continuation ->
+        rejectedUsersRef.child(currentUserId).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val rejectedUsers = snapshot.children.mapNotNull { it.getValue(String::class.java) }
+                continuation.resume(rejectedUsers)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                continuation.resumeWithException(error.toException())
+            }
+        })
     }
 
     override suspend fun addUser(user: User, userID : String, onSuccess: () -> Unit, onFailure: (String) -> Unit) {

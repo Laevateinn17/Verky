@@ -131,7 +131,6 @@ class LoginActivity : AppCompatActivity(){
                         when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL)) {
                             BiometricManager.BIOMETRIC_SUCCESS -> {
                                 if (userID.isNullOrEmpty() || userID.toString() != viewModel.currentUser?.uid ) {
-                                    Log.e("testing", "home sss")
                                     showBiometricLoginConfirmationDialog()
                                 }
                                 else {

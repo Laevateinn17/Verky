@@ -7,6 +7,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import edu.bluejack23_2.verky.data.Resource
+import edu.bluejack23_2.verky.data.model.LogUser
 import edu.bluejack23_2.verky.data.model.LoggedUser
 import edu.bluejack23_2.verky.data.model.User
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -41,6 +42,7 @@ class UserRepositoryImpl @Inject constructor(
 
                 val user = User(userId, name, email, dobString, gender, religion, activities, incognitoMode, profilePicture, galleryPicture)
                 LoggedUser.getInstance().setUser(user)
+                LogUser.setUser(user)
                 Resource.Success(user)
             }
 
@@ -122,7 +124,10 @@ class UserRepositoryImpl @Inject constructor(
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (childSnapshot in snapshot.children) {
                         val potentialMatch = childSnapshot.getValue(User::class.java)
-                        if (potentialMatch != null && potentialMatch.id !in rejectedUsers) {
+                        if (potentialMatch != null) {
+                            potentialMatch.id = childSnapshot.key
+                        }
+                        if (potentialMatch != null && potentialMatch.id !in rejectedUsers && potentialMatch.id != currentUserId) {
                             continuation.resume(potentialMatch)
                             return
                         }

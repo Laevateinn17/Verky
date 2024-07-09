@@ -13,6 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import edu.bluejack23_2.verky.data.Resource
 import edu.bluejack23_2.verky.data.auth.AuthRepository
+import edu.bluejack23_2.verky.data.model.LogUser
 import edu.bluejack23_2.verky.data.model.User
 import edu.bluejack23_2.verky.data.user.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -148,6 +149,7 @@ class AuthViewModel @Inject constructor(
 
     fun logOut(){
         authRepository.logOut();
+        LogUser.clearUser()
         _loginFlow.value = null
         _signUpFlow.value = null
     }

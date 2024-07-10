@@ -57,7 +57,9 @@ class ChatRoomActivity : AppCompatActivity() {
             viewModel.fetchMessage(it).observe(this, Observer { messages ->
                 val sortedMessages = messages.sortedBy { it.timestamp }
                 messageAdapter.submitList(sortedMessages)
-                binding.chatRecyclerView.scrollToPosition(messages.size - 1)
+                binding.chatRecyclerView.post {
+                    binding.chatRecyclerView.smoothScrollToPosition(sortedMessages.size - 1)
+                }
             })
         }
 

@@ -84,7 +84,7 @@ class ChatRepositoryImpl @Inject constructor(
                                 val partnerUserSnapshot = task.result
                                 val partnerUser = partnerUserSnapshot.getValue(User::class.java)
 
-                                val messagesSnapshot = chatSnapshot.child("messages")
+                                val messagesSnapshot = chatSnapshot.child("message")
                                 val messages = messagesSnapshot.children.mapNotNull { msgSnap ->
                                     msgSnap.getValue(Message::class.java)
                                 }

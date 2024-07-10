@@ -45,11 +45,14 @@ class ChatAdapter(private val onItemClicked: (Chat) -> Unit) : ListAdapter<Chat,
             .into(holder.imageChat)
         val statusTrueCount = chat.countMessagesWithStatusTrue()
 
-        holder.newMessageTextView.text = if (statusTrueCount == 0) "No new message" else "$statusTrueCount new message!"
-        val gray = ContextCompat.getColor(holder.itemView.context, R.color.gray_200)
-        val primary = ContextCompat.getColor(holder.itemView.context, R.color.primary)
-        holder.newMessageTextView.setTextColor(if (statusTrueCount == 0) gray else primary)
+//        holder.newMessageTextView.text = if (statusTrueCount == 0) "No new message" else "$statusTrueCount new message!"
+//        val gray = ContextCompat.getColor(holder.itemView.context, R.color.gray_200)
+//        val primary = ContextCompat.getColor(holder.itemView.context, R.color.primary)
+//
+//        holder.newMessageTextView.setTextColor(if (statusTrueCount == 0) gray else primary)
+//        Log.e("chat", chat.toString())
 
+        holder.newMessageTextView.text = chat.message.get(chat.message.size - 1).content
     }
 
     private class ChatDiffCallback : DiffUtil.ItemCallback<Chat>() {

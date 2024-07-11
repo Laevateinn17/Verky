@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
@@ -35,8 +36,44 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         binding.backButton.setOnClickListener{
-            finish()
+            onBackPressed();
         }
 
+        setupDarkModeSwitch()
+    }
+
+    private fun setupDarkModeSwitch() {
+        binding.darkModeSwitch.isChecked = isDarkModeEnabled()
+
+        binding.darkModeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                enableDarkMode()
+            } else {
+                disableDarkMode()
+            }
+        }
+    }
+
+    private fun isDarkModeEnabled(): Boolean {
+        val sharedPreferences = getSharedPreferences("app_preferences", MODE_PRIVATE)
+        return sharedPreferences.getBoolean("dark_mode", false)
+    }
+
+    private fun enableDarkMode() {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        saveDarkModeSetting(true)
+    }
+
+    private fun disableDarkMode() {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        saveDarkModeSetting(false)
+    }
+
+    private fun saveDarkModeSetting(isEnabled: Boolean) {
+        val sharedPreferences = getSharedPreferences("app_preferences", MODE_PRIVATE)
+        with(sharedPreferences.edit()) {
+            putBoolean("dark_mode", isEnabled)
+            apply()
+        }
     }
 }

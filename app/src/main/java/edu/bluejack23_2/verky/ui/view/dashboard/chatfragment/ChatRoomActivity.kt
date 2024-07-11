@@ -74,6 +74,7 @@ class ChatRoomActivity : AppCompatActivity() {
                 binding.chatContent.text.clear()
             }
         }
+
     }
 
     private fun sendMessage(message : String){

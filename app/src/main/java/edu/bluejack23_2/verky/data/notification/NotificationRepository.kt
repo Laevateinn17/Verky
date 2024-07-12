@@ -1,6 +1,7 @@
 package edu.bluejack23_2.verky.data.notification
 
 import edu.bluejack23_2.verky.data.model.Notification
+import edu.bluejack23_2.verky.data.model.User
 
 
 interface NotificationRepository {
@@ -9,4 +10,9 @@ interface NotificationRepository {
     fun acceptNotification(notif : Notification)
 
     fun rejectNotification(notif : Notification)
+
+    fun addNotification(notif: Notification)
+
+    fun declineNotification(notif: Notification)
+
 }

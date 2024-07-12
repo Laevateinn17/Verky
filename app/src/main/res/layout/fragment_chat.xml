@@ -51,6 +51,14 @@
                 android:fontFamily="@font/urbanist_bold"
                 />
         </LinearLayout>
+        <TextView
+            android:id="@+id/noDataTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="There is no data"
+            android:gravity="center"
+            android:visibility="gone" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/chatRecyclerView"
             android:layout_width="match_parent"

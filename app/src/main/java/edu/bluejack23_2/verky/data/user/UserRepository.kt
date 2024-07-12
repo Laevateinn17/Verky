@@ -17,4 +17,6 @@ interface UserRepository {
     suspend fun getPotentialMatch() : User
 
     suspend fun addUser(user: User, userID : String, onSuccess: () -> Unit, onFailure: (String) -> Unit)
+
+    suspend fun updateUser(user : User)
 }

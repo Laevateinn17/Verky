@@ -29,6 +29,16 @@
             android:layout_marginLeft="20dp"
             />
     </LinearLayout>
+    <TextView
+        android:id="@+id/noNotificationText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/there_is_no_notification"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"

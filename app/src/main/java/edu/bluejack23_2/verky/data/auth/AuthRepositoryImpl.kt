@@ -7,6 +7,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.storage.FirebaseStorage
 import edu.bluejack23_2.verky.data.Resource
+import edu.bluejack23_2.verky.data.model.User
 import edu.bluejack23_2.verky.data.user.UserRepository
 import edu.bluejack23_2.verky.data.utils.await
 import kotlinx.coroutines.Dispatchers
@@ -46,6 +47,7 @@ class AuthRepositoryImpl @Inject constructor(
             Resource.Failure(e)
         }
     }
+
 
     override fun logOut() {
         firebaseAuth.signOut();

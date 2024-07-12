@@ -51,8 +51,11 @@ class ChatAdapter(private val onItemClicked: (Chat) -> Unit) : ListAdapter<Chat,
 //
 //        holder.newMessageTextView.setTextColor(if (statusTrueCount == 0) gray else primary)
 //        Log.e("chat", chat.toString())
-
-        holder.newMessageTextView.text = chat.message.get(chat.message.size - 1).content
+        if(chat.message.size == 0){
+            holder.newMessageTextView.text = ""
+        }else{
+            holder.newMessageTextView.text = chat.message.get(chat.message.size - 1).content
+        }
     }
 
     private class ChatDiffCallback : DiffUtil.ItemCallback<Chat>() {

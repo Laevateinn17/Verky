@@ -91,7 +91,7 @@ class Step2RegisterFragment : Fragment() {
         religionRecyclerView.layoutManager = religionLayoutManager
         religionRecyclerView.adapter = religionAdapter
 
-        interestAdapter = InterestAdapter(emptyList(), emptyList()) { selectedInterest ->
+        interestAdapter = InterestAdapter(emptyList(), ) { selectedInterest ->
             user?.interest = selectedInterest
             user?.let { authViewModel.setUser(it) }
         }

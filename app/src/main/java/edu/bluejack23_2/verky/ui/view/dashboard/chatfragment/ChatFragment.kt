@@ -49,8 +49,15 @@ class ChatFragment : Fragment() {
         }
 
         chatViewModel.chatList.observe(viewLifecycleOwner, Observer { chats ->
-            chatAdapter.submitList(chats)
-            binding.chatRecyclerView.scrollToPosition(chats.size - 1)
+            if (chats.isEmpty()) {
+                binding.noDataTextView.visibility = View.VISIBLE
+                binding.chatRecyclerView.visibility = View.GONE
+            } else {
+                binding.noDataTextView.visibility = View.GONE
+                binding.chatRecyclerView.visibility = View.VISIBLE
+                chatAdapter.submitList(chats)
+                binding.chatRecyclerView.scrollToPosition(chats.size - 1)
+            }
         })
 
     }

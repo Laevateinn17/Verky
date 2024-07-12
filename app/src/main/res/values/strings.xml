@@ -45,4 +45,5 @@
     <string name="register" translatable="false">Register</string>
     <string name="my_height_label">Height(cm)</string>
     <string name="my_height_hint">Input your height</string>
+    <string name="there_is_no_notification">There is no notification</string>
 </resources>

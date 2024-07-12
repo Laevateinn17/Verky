@@ -20,6 +20,7 @@ class NotificationRepositoryImpl @Inject constructor(
     private val firebaseDatabase: FirebaseDatabase
 ) : NotificationRepository{
     private val notificationRef: DatabaseReference by lazy { firebaseDatabase.getReference("notification") }
+    private val rejectedUsersRef: DatabaseReference by lazy { firebaseDatabase.getReference("rejectedUsers") }
     private val usersRef: DatabaseReference by lazy { firebaseDatabase.getReference("users") }
 
     override fun getNotificationList(userID: String, callback: (List<Notification>) -> Unit) {
@@ -81,6 +82,26 @@ class NotificationRepositoryImpl @Inject constructor(
     }
 
     override fun rejectNotification(notif: Notification) {
+        val notif2 = Notification(from = notif.to, to = notif.from);
+        val rejectUserRef = rejectedUsersRef.push()
+        val rejectUserRef2 = rejectedUsersRef.push()
+
+        rejectUserRef.setValue(notif)
+            .addOnSuccessListener {
+                Log.d("NotificationRepository", "Notification successfully rejected and sent to 1")
+            }
+            .addOnFailureListener { e ->
+                Log.e("NotificationRepository", "Error rejecting 1", e)
+            }
+
+        rejectUserRef2.setValue(notif2)
+            .addOnSuccessListener {
+                Log.d("NotificationRepository", "Notification successfully rejected and sent to sender")
+            }
+            .addOnFailureListener { e ->
+                Log.e("NotificationRepository", "Error rejecting notification", e)
+            }
+
         val notificationId = notif.notificationID
         notificationRef.child(notificationId).removeValue()
             .addOnSuccessListener {
@@ -90,4 +111,15 @@ class NotificationRepositoryImpl @Inject constructor(
                 Log.e("NotificationRepository", "Error removing notification", e)
             }
     }
+
+    override fun addNotification(notif: Notification) {
+        val notifRef = notificationRef.push()
+        notifRef.setValue(notif)
+    }
+
+    override fun declineNotification(notif: Notification) {
+        val rejectUserRef = rejectedUsersRef.push()
+        rejectUserRef.setValue(notif)
+    }
+
 }

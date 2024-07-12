@@ -3,6 +3,7 @@ package edu.bluejack23_2.verky.ui.view.dashboard.chatfragment
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -51,8 +52,12 @@ class NotificationActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         viewModel.notificationList.observe(this) { notifications ->
-            notifications?.let {
-                notificationAdapter.updateData(it)
+            if (notifications.isNullOrEmpty()) {
+                binding.noNotificationText.visibility = View.VISIBLE
+                binding.noNotificationText.text = "There is no notification"
+            } else {
+                binding.noNotificationText.visibility = View.GONE
+                notificationAdapter.updateData(notifications)
             }
         }
     }

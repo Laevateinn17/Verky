@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import dagger.hilt.android.AndroidEntryPoint
 import edu.bluejack23_2.verky.data.model.User
 import edu.bluejack23_2.verky.databinding.FragmentAboutMeBinding
@@ -29,7 +32,6 @@ class AboutMeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAboutMeBinding.inflate(layoutInflater, container, false)
-
         return binding.root
     }
 
@@ -40,9 +42,36 @@ class AboutMeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var interests = ArrayList<String>()
 
-        binding.interestRecyclerView.layoutManager = LinearLayoutManager(context)
-        interestAdapter = InterestAdapter(listOf(), listOf(), {})
+        interests.addAll(listOf("\uD83D\uDCDA Books",
+                "\uD83C\uDFB5 Music",
+                "⛰\uFE0F Adventure",
+                "\uD83C\uDF7D\uFE0F Cuisine",
+                "\uD83E\uDDD8\u200D♂\uFE0F Yoga",
+                "\uD83D\uDDA5\uFE0F Technology",
+                "\uD83D\uDCAA Health",
+                "\uD83C\uDFA8 Art",
+                "\uD83C\uDF0D Travel",
+                "\uD83D\uDC3E Pets",
+                "\uD83C\uDFCB\uFE0F Fitness",
+                "\uD83C\uDFAE Gaming",
+                "\uD83C\uDFA5 Movies",
+                "\uD83D\uDCF7 Photography",
+                "\uD83C\uDFAD Theater",
+                "\uD83C\uDF3F Gardening",
+                "\uD83C\uDF63 Cooking",
+                "\uD83D\uDEB4\u200D♂\uFE0F Cycling",
+                "\uD83C\uDFA7 Podcasts",
+                "\uD83D\uDCD6 Reading",
+                "\uD83C\uDFC3\u200D♀\uFE0F Running"))
+
+        val interestLayoutManager = FlexboxLayoutManager(context)
+        interestLayoutManager.flexDirection = FlexDirection.ROW
+        interestLayoutManager.justifyContent = JustifyContent.FLEX_START
+
+        binding.interestRecyclerView.layoutManager = interestLayoutManager
+        interestAdapter = InterestAdapter(interests, listOf(), {})
         binding.interestRecyclerView.adapter = interestAdapter
 
     }
@@ -70,8 +99,9 @@ class AboutMeFragment : Fragment() {
             } else if(it.gender == "Female") {
                 binding.FemaleRB.isChecked = true
             }
-
-            interestAdapter.setItems(user!!.interest)
+            binding.heightEditText.setText(it.height.toString())
+            Log.e("interestAdapter", it.interest.toString())
+            interestAdapter.setItems(it.interest)
         }
     }
 

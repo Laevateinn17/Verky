@@ -51,14 +51,8 @@ class InterestAdapter(private var items: List<String>, private var selectedInter
         }
     }
 
-    fun setSelectedItems(selectedInterest: List<String>){
-        selectedItems.addAll(selectedInterest)
-        notifyDataSetChanged()
-    }
-
     fun setItems(newItems: List<String>) {
         items = newItems
-        selectedItems.addAll(selectedInterest)
         notifyDataSetChanged()
     }
 }

@@ -34,13 +34,13 @@ class UserRepositoryImpl @Inject constructor(
                 val dobString = snapshot.child("dob").getValue(String::class.java) ?: ""
                 val gender = snapshot.child("gender").getValue(String::class.java) ?: ""
                 val religion = snapshot.child("religion").getValue(String::class.java) ?: ""
-                val activities = snapshot.child("activities").children.mapNotNull { it.getValue(String::class.java) }
+                val interests = snapshot.child("interest").children.mapNotNull { it.getValue(String::class.java) }
                 val incognitoMode = snapshot.child("incognito_mode").getValue(Boolean::class.java) ?: false
                 val profilePicture = snapshot.child("profile_picture").getValue(String::class.java) ?: ""
-2
+                val height = snapshot.child("height").getValue(Int::class.java) ?: 0
                 val galleryPicture = snapshot.child("gallery_picture").children.mapNotNull { it.getValue(String::class.java) }
 
-                val user = User(userId, name, email, dobString, gender, religion, activities, incognitoMode, profilePicture, galleryPicture)
+                val user = User(userId, name, email, dobString, gender, religion, interests, incognitoMode, profilePicture, height, galleryPicture)
                 LoggedUser.getInstance().setUser(user)
                 LogUser.setUser(user)
                 Resource.Success(user)

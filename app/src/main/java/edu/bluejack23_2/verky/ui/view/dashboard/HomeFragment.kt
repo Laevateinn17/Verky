@@ -43,13 +43,15 @@ class HomeFragment : Fragment() {
         ViewModelProvider(this).get(UserViewModel::class.java)
     }
     private lateinit var nameAgeTextView: TextView
-    private lateinit var userImageView: ImageView
+    private lateinit var imageBackground : ImageView
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        nameAgeTextView = view.findViewById(R.id.name_age_text) // Initialize TextView
+        nameAgeTextView = view.findViewById(R.id.name_age_text)
+        imageBackground = view.findViewById(R.id.backgroundImageView)
         return view
     }
 
@@ -71,25 +73,11 @@ class HomeFragment : Fragment() {
                             val age = today.get(Calendar.YEAR) - birthCalendar.get(Calendar.YEAR)
                             val displayNameAge = "${it.name}, $age"
                             nameAgeTextView.text = displayNameAge
-                            val backgroundProfile =
-                                view.findViewById<androidx.constraintlayout.widget.ConstraintLayout>(R.id.BackgroundProfile)
+
                             Glide.with(this@HomeFragment)
-                                .asBitmap()
                                 .load(it.gallery_picture[0])
                                 .placeholder(R.color.gray_200)
-                                .into(object : CustomTarget<Bitmap>() {
-                                    override fun onResourceReady(
-                                        resource: Bitmap,
-                                        transition: Transition<in Bitmap>?
-                                    ) {
-                                        val bitmapDrawable = BitmapDrawable(resources, resource)
-                                        backgroundProfile.background = bitmapDrawable
-                                    }
-
-                                    override fun onLoadCleared(placeholder: Drawable?) {
-                                        // Handle the placeholder if needed
-                                    }
-                                })
+                                .into(imageBackground)
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()

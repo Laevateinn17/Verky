@@ -13,6 +13,7 @@ data class User(
     var interest: List<String> = emptyList(),
     var incognito_mode: Boolean = false,
     var profile_picture: String = "",
+    var height : Int = 0,
     var gallery_picture: List<String> = emptyList()
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
@@ -25,6 +26,7 @@ data class User(
         parcel.createStringArrayList() ?: emptyList(),
         parcel.readByte() != 0.toByte(),
         parcel.readString() ?: "",
+        parcel.readInt() ?: 0,
         parcel.createStringArrayList() ?: emptyList()
     )
 

@@ -244,6 +244,7 @@
                         android:layout_marginHorizontal="30dp"
                         />
                     <EditText
+                        android:id="@+id/heightEditText"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:ems="20"
@@ -273,6 +274,7 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/interestRecyclerView"
+                        android:layout_marginHorizontal="30dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
@@ -282,7 +284,7 @@
                 android:id="@+id/continueButton"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="@string/continue_button"
+                android:text="Update"
                 android:layout_marginHorizontal="32dp"
                 android:background="@drawable/custom_button"
                 android:textAllCaps="false"

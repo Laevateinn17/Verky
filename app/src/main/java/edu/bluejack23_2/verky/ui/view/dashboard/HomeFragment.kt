@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
@@ -37,7 +38,8 @@ class HomeFragment : Fragment() {
     private lateinit var acceptButton : ImageView
     private lateinit var declineButton : ImageView
     private lateinit var curruser : User;
-
+    private lateinit var noMatchText: TextView
+    private lateinit var matchProfileContainer: ConstraintLayout
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,6 +49,8 @@ class HomeFragment : Fragment() {
         imageBackground = view.findViewById(R.id.backgroundImageView)
         acceptButton = view.findViewById(R.id.acceptButton)
         declineButton = view.findViewById(R.id.rejectButton)
+        noMatchText = view.findViewById(R.id.no_match_text)
+        matchProfileContainer = view.findViewById(R.id.match_profile_layout)
         return view
     }
 
@@ -126,7 +130,9 @@ class HomeFragment : Fragment() {
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-                Toast.makeText(context, "Failed to fetch potential match", Toast.LENGTH_SHORT).show()
+                matchProfileContainer.visibility = View.GONE
+                noMatchText.visibility = View.VISIBLE
+//                Toast.makeText(context, "Failed to fetch potential match", Toast.LENGTH_SHORT).show()
             }
         }
     }
